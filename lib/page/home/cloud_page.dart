@@ -59,26 +59,14 @@ class _CloudPageState extends State<CloudPage>
           RaisedButton(
             child: Text("跳转"),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return NewPage();
-              }));
+              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //   return NewPage();
+              // }));
+              Navigator.of(context)
+                  .pushNamed("/new_page", arguments: {'name': "hi"});
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class NewPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("新的界面"),
-      ),
-      body: Center(
-        child: Text("我是一个新的界面"),
       ),
     );
   }

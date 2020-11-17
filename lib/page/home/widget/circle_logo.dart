@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CircleLogo extends StatefulWidget {
+  final String type;
+
+  const CircleLogo({Key key, this.type}) : super(key: key);
+
   @override
   _CircleLogoState createState() => _CircleLogoState();
 }
@@ -29,11 +33,18 @@ class _CircleLogoState extends State<CircleLogo>
 
   @override
   Widget build(BuildContext context) {
-    return RotationTransition(
-      turns: _controller,
-      child: CircleAvatar(
+    if (widget.type != null) {
+      return CircleAvatar(
+        radius: 26.0,
         backgroundImage: NetworkImage(logoUrl),
-      ),
-    );
+      );
+    } else {
+      return RotationTransition(
+        turns: _controller,
+        child: CircleAvatar(
+          backgroundImage: NetworkImage(logoUrl),
+        ),
+      );
+    }
   }
 }

@@ -18,5 +18,5 @@ class ApiHome {
     _request = Request();
   }
 
-  getBanner(data) => _request.get(path: '/banner', data: data);
+  getBanner(data) => _request.get(path: '/banner', data: data); // 获取banner
 }

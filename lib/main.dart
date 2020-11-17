@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-// import 'dart:io';
 import 'package:flutter/services.dart';
 
 import 'common/variable.dart' show AppColors;
-import 'page/home/home_page.dart';
+
+import 'router/routes.dart';
+
+import 'page/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +31,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Color(AppColors.APP_THEME),
         ),
-        home: HomePage(),
+        home: SplashScreen(),
+        // routes: routes,
+        onGenerateRoute: onGenerateRoutePage,
+        // initialRoute: '/',
       ),
     );
   }
