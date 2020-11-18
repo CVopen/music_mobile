@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../common/variable.dart';
 
+// 底部弹出框
 // ignore: missing_return
 Function myShowModalBottomSheet(context, double height, count) {
   showModalBottomSheet(
@@ -18,7 +19,12 @@ Function myShowModalBottomSheet(context, double height, count) {
           children: [
             Container(
               padding: EdgeInsets.all(AppSize.PADDING_SIZE_B),
-              child: Text('歌单$count'),
+              child: Text(
+                '歌单$count',
+                style: TextStyle(
+                  color: Color(AppColors.FONT_COLOR),
+                ),
+              ),
               width: double.infinity,
               decoration: BoxDecoration(
                 border: Border(
@@ -53,9 +59,9 @@ Function myShowModalBottomSheet(context, double height, count) {
                   children: [
                     Icon(
                       Icons.delete,
-                      size: 20,
+                      size: 28,
                     ),
-                    SizedBox(width: AppSize.BOX_SIZE_WIDTH_M),
+                    SizedBox(width: AppSize.PADDING_SIZE),
                     Text('删除'),
                   ],
                 ),

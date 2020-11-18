@@ -76,8 +76,8 @@ class _HomePageState extends State<HomePage>
       CloudPage(),
       VideoPage(),
     ];
-    _currentIndex = 0;
-    _controller = PageController(initialPage: 0);
+    _currentIndex = 1;
+    _controller = PageController(initialPage: 1);
   }
 
   @override

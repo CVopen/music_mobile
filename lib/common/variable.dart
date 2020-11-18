@@ -4,6 +4,7 @@ abstract class AppColors {
   static const IMPORTANT_COLOR = 0xff5340a7; // 突出颜色
 
   static const BACKGROUND_COLOR = 0xffffffff; // 部分背景色
+  static const BACKGROUND_COLOR_DEEP = 0xffeeeeee; // 部分背景色
 
   static const FONT_COLOR = 0xff555555; // 不重要字体颜色
 

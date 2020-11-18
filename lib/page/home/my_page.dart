@@ -115,23 +115,25 @@ List iconItem() {
   List<Widget> widget = [];
 
   for (var i = 0; i < list.length; i++) {
-    widget.add(Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          list[i],
-          color: Color(AppColors.IMPORTANT_COLOR),
-        ),
-        SizedBox(
-          height: AppSize.BOX_SIZE_HEIGHT_S,
-        ),
-        Text(
-          text[i],
-          style: TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
-        ),
-      ],
-    ));
+    widget.add(
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            list[i],
+            color: Color(AppColors.IMPORTANT_COLOR),
+          ),
+          SizedBox(
+            height: AppSize.BOX_SIZE_HEIGHT_S,
+          ),
+          Text(
+            text[i],
+            style: TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
+          ),
+        ],
+      ),
+    );
   }
 
   return widget;
