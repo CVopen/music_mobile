@@ -13,8 +13,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 3000));
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _animation = Tween(begin: 0.7, end: 1.0).animate(_controller);
 
     _animation.addStatusListener(

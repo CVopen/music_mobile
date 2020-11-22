@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 class Request {
   factory Request() => _resInstance();
@@ -16,7 +15,8 @@ class Request {
 
   Request._init() {
     _dio = Dio(BaseOptions(
-      baseUrl: 'http://192.168.1.109:3000/',
+      // baseUrl: 'http://192.168.1.106:3000/',
+      baseUrl: 'http://192.168.1.106:3000/',
       // baseUrl: 'http://192.168.1.8:3000/',
       connectTimeout: 5000,
       receiveTimeout: 5000,
@@ -25,7 +25,7 @@ class Request {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options) async {
-          print(options);
+          // print('options $options');
           // 在请求被发送之前做一些事情
           return options; //continue
           // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`对象或返回`dio.resolve(data)`。
@@ -46,19 +46,28 @@ class Request {
     );
   }
 
-  Future<dynamic> get({@required String path, Map data}) {
-    return _http(path, 'get', data);
+  Future<dynamic> get(String path, {Map data}) {
+    if (data != null) {
+      return _http(path, 'get', data: data);
+    } else {
+      return _http(path, 'get');
+    }
   }
 
-  Future<dynamic> post({@required String path, Map data}) {
-    return _http(path, 'post', data);
+  Future<dynamic> post(String path, Map data) {
+    return _http(path, 'post', data: data);
   }
 
-  Future<dynamic> _http(String path, String mode, Map data) async {
+  Future<dynamic> _http(String path, String mode, {Map data}) async {
     try {
       switch (mode) {
         case 'get':
-          var getResponse = await _dio.get(path, queryParameters: data);
+          var getResponse;
+          if (data != null) {
+            getResponse = await _dio.get(path, queryParameters: data);
+          } else {
+            getResponse = await _dio.get(path);
+          }
           // print('getResponse $getResponse');
           return getResponse;
         case 'post':
@@ -66,7 +75,7 @@ class Request {
           return postResponse;
       }
     } catch (e) {
-      print(e);
+      print('出错了 $e');
     }
   }
 }

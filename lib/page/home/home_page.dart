@@ -109,11 +109,16 @@ class _HomePageState extends State<HomePage>
             ],
           ),
           drawer: DrawerWidget(),
-          // body: Center(
-          //   child: _page[_currentIndex],
-          // ),
           body: _buildBodyWidget(),
-          bottomNavigationBar: _buildBottomNavigationBarWidget(),
+          bottomNavigationBar: Theme(
+            // 去除bottombar水波纹点击效果
+            data: ThemeData(
+              // brightness: Brightness.light,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: _buildBottomNavigationBarWidget(),
+          ),
         ),
       ),
     );

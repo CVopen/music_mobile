@@ -17,6 +17,17 @@ class ApiHome {
   ApiHome._init() {
     _request = Request();
   }
+  // 获取banner
+  getBanner({data}) {
+    if (data != null) {
+      return _request.get('/banner', data: data);
+    } else {
+      return _request.get('/banner');
+    }
+  }
 
-  getBanner(data) => _request.get(path: '/banner', data: data); // 获取banner
+  // 推荐歌单
+  getPersonalized(data) {
+    return _request.get('/personalized', data: data);
+  }
 }

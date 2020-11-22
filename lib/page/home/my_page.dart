@@ -55,7 +55,8 @@ Widget avatarToLogin() {
               '立即登录',
               style: TextStyle(
                 color: Color(AppColors.FONT_EM_COLOR),
-                fontSize: AppSize.FONT_SIZE_B,
+                fontSize: AppSize.FONT_SIZE,
+                fontWeight: FontWeight.w500,
               ),
             ),
             Icon(

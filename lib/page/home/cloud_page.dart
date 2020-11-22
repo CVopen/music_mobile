@@ -1,17 +1,6 @@
-// import 'package:flutter/material.dart';
-
-// class CloudPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Colors.pink,
-//       child: Center(
-//         child: Text('云村'),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
+
+// import '../../api/home_page.dart';
 
 class CloudPage extends StatefulWidget {
   @override
@@ -28,6 +17,8 @@ class _CloudPageState extends State<CloudPage>
   @override
   void initState() {
     super.initState();
+    // var swiper = ApiHome().getBanner();
+    // print(swiper);
   }
 
   Widget build(BuildContext context) {

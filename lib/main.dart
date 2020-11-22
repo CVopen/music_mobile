@@ -30,11 +30,13 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Color(AppColors.APP_THEME),
+          // splashColor: Color.fromRGBO(0, 0, 0, 0),
+          // highlightColor: Color.fromRGBO(0, 0, 0, 0),
         ),
         home: SplashScreen(),
         // routes: routes,
         onGenerateRoute: onGenerateRoutePage,
-        // initialRoute: '/',
+        // initialRoute: '/home_page',
       ),
     );
   }
