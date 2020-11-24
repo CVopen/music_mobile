@@ -10,7 +10,9 @@ abstract class AppColors {
   static const FONT_COLOR = 0xff555555; // 不重要字体颜色
 
   static const FONT_MAIN_COLOR = 0xff222222; // 主要字体颜色
-  static const BORDER_COLOR = 0xff222222; // 主要字体颜色
+  static const BORDER_COLOR = 0xff222222; // 边框颜色
+
+  static const BORDER_COLOR2 = 0xff999999; // 边框颜色
 
   static const FONT_EM_COLOR = 0xff000000; //用于强调字体颜色
 }

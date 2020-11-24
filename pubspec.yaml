@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   dio: ^3.0.10
   flutter_swiper: ^1.1.6
+  carousel_slider: ^2.3.1
   # fluro: ^1.7.7
 
 dev_dependencies:

@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:music_mobile/common/variable.dart';
 
 import 'widget/find_page/find_swiper.dart';
-import 'widget/find_page/recommend_music.dart';
+import 'widget/find_page/container_title.dart';
 
 import 'package:music_mobile/utils/format.dart';
 
@@ -19,6 +19,7 @@ class _FindPageState extends State<FindPage>
     with AutomaticKeepAliveClientMixin {
   List swiperList = [];
   List personalizedList = [];
+  List albumList = [];
 
   @override
   bool get wantKeepAlive => true;
@@ -26,7 +27,6 @@ class _FindPageState extends State<FindPage>
   @override
   void initState() {
     super.initState();
-    // this._getSwiper();
     this._refresh();
   }
 
@@ -37,6 +37,7 @@ class _FindPageState extends State<FindPage>
     });
     await this._getSwiper();
     await this._getPersonalizedList();
+    await this._getAlbumList();
     await Future.delayed(Duration(seconds: 1), () {
       print('我刷新了');
     });
@@ -60,19 +61,31 @@ class _FindPageState extends State<FindPage>
     });
   }
 
+  Future _getAlbumList() async {
+    var res = await ApiHome().getAlbumNewest({"limit": 12});
+    print(res.data['albums'].length);
+    setState(() {
+      albumList = res.data['albums'];
+    });
+  }
+
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
     return RefreshIndicator(
       child: ListView(
         children: [
-          // Offstage(
-          //   offstage: swiperList.length > 0 ? false : true,
-          //   child: FindSwiper(swiperList: swiperList),
-          // ),
           FindSwiper(swiperList: swiperList),
           gridIcon(),
-          RecommendMusic(personalizedList: personalizedList),
+          ContainerTitle(
+            list: personalizedList,
+            title: '推荐歌单',
+          ),
+          ContainerTitle(
+            list: albumList,
+            title: '新碟上架',
+          ),
+          Text('mv'),
         ],
       ),
       color: Color(AppColors.IMPORTANT_COLOR),

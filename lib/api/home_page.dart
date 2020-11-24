@@ -30,4 +30,9 @@ class ApiHome {
   getPersonalized(data) {
     return _request.get('/personalized', data: data);
   }
+
+  // 数字专辑-新碟上架
+  getAlbumNewest(data) {
+    return _request.get('/album/newest', data: data);
+  }
 }

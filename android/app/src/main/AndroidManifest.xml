@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="music_mobile"
+        android:label="网抑云"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
