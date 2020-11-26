@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_mobile/common/variable.dart';
+import 'image_radius.dart';
 
 class MusicItemListView extends StatefulWidget {
   final Map item;
@@ -20,15 +21,7 @@ class _MusicItemListViewState extends State<MusicItemListView> {
       child: Row(
         children: [
           Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                widget.item['picUrl'],
-                fit: BoxFit.fill,
-                width: 80,
-                height: 80,
-              ),
-            ),
+            child: ImageRadius(widget.item['picUrl'], 80.0, 80.0),
           ),
           SizedBox(
             width: AppSize.BOX_SIZE_WIDTH_M,
@@ -55,29 +48,35 @@ class _MusicItemListViewState extends State<MusicItemListView> {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Row(
-                      children: [
-                        Text(
-                          widget.item['name'],
-                          style: TextStyle(
-                            color: Color(AppColors.FONT_EM_COLOR),
-                            fontSize: AppSize.FONT_SIZE_M,
+                    child: OverflowBox(
+                      alignment: Alignment.centerLeft,
+                      maxWidth: double.infinity,
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.item['company'],
+                            style: TextStyle(
+                              color: Color(AppColors.FONT_EM_COLOR),
+                              fontSize: AppSize.FONT_SIZE_M,
+                            ),
                           ),
-                        ),
-                        Text(
-                          ' - ${widget.item['artist']['name']}',
-                          style: TextStyle(
-                            color: Color(AppColors.FONT_COLOR),
-                            fontSize: AppSize.FONT_SIZE_S,
+                          Text(
+                            ' - ${widget.item['artist']['name']}',
+                            style: TextStyle(
+                              color: Color(AppColors.FONT_COLOR),
+                              fontSize: AppSize.FONT_SIZE_S,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: Text(
-                      widget.item['company'],
+                      widget.item['name'],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Color(AppColors.FONT_COLOR),
                         fontSize: AppSize.FONT_SIZE_S,

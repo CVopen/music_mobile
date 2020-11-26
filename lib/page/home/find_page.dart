@@ -20,6 +20,7 @@ class _FindPageState extends State<FindPage>
   List swiperList = [];
   List personalizedList = [];
   List albumList = [];
+  List topList = [];
 
   @override
   bool get wantKeepAlive => true;
@@ -27,23 +28,52 @@ class _FindPageState extends State<FindPage>
   @override
   void initState() {
     super.initState();
-    this._refresh();
+    this._getSwiper();
+    this._getPersonalizedList();
+    this._getAlbumList();
+    this._getTopList();
   }
 
   Future _refresh() async {
     setState(() {
       swiperList.clear();
       personalizedList.clear();
+      albumList.clear();
+      topList.clear();
     });
-    await this._getSwiper();
-    await this._getPersonalizedList();
-    await this._getAlbumList();
+    this._getSwiper();
+    this._getPersonalizedList();
+    this._getAlbumList();
+    this._getTopList();
     await Future.delayed(Duration(seconds: 1), () {
       print('我刷新了');
     });
     return;
   }
 
+  // 生成随机数
+  // _createArr(count, max, [arr]) {
+  //   List result = [];
+  //   if (arr == null) arr = [];
+  //   result.addAll(arr);
+
+  //   int countFor = count - result.length;
+
+  //   for (var i = 0; i < countFor; i++) {
+  //     result.add(Random().nextInt(max));
+  //   }
+  //   var dedu = Set();
+  //   dedu.addAll(result);
+  //   dedu.toList();
+
+  //   if (dedu.length != count) {
+  //     List rand = _createArr(count, max, dedu.toList());
+  //     dedu.addAll(rand);
+  //   }
+  //   return dedu.toList();
+  // }
+
+  // 获取banner
   Future _getSwiper() async {
     var res = await ApiHome().getBanner(data: {"type": 2});
     setState(() {
@@ -51,21 +81,45 @@ class _FindPageState extends State<FindPage>
     });
   }
 
+  // 获取推荐歌单
   Future _getPersonalizedList() async {
-    var res = await ApiHome().getPersonalized({"limit": 10});
+    List count = createArr(10, 30);
+    List arr = [];
+    var res = await ApiHome().getPersonalized({"limit": 30});
     res.data['result'].forEach((item) {
       item['playCount'] = computePlay(item['playCount']);
     });
+    count.forEach((element) {
+      arr.add(res.data['result'][element]);
+    });
     setState(() {
-      personalizedList = res.data['result'];
+      personalizedList = arr;
     });
   }
 
+  // 获取新碟
   Future _getAlbumList() async {
-    var res = await ApiHome().getAlbumNewest({"limit": 12});
-    print(res.data['albums'].length);
+    List count = createArr(9, 12);
+    List arr = [];
+    var res = await ApiHome().getAlbumNewest({"limit": 30});
+    count.forEach((item) {
+      arr.add(res.data['albums'][item]);
+    });
     setState(() {
-      albumList = res.data['albums'];
+      albumList = arr;
+    });
+  }
+
+  // 获取排行榜
+  Future _getTopList() async {
+    var res = await ApiHome().getTopList();
+    List count = createArr(5, 32);
+    List arr = [];
+    count.forEach((element) {
+      arr.add(res.data['list'][element]);
+    });
+    setState(() {
+      topList = arr;
     });
   }
 
@@ -85,7 +139,13 @@ class _FindPageState extends State<FindPage>
             list: albumList,
             title: '新碟上架',
           ),
-          Text('mv'),
+          ContainerTitle(
+            list: topList,
+            title: '排行榜',
+          ),
+          SizedBox(
+            height: 20,
+          )
         ],
       ),
       color: Color(AppColors.IMPORTANT_COLOR),
@@ -101,7 +161,7 @@ Widget gridIcon() {
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5, //横轴四个子widget
+          crossAxisCount: 4, //横轴四个子widget
           childAspectRatio: 1.0 //宽高比为1时，子widget
           ),
       children: iconItem(),
@@ -116,14 +176,14 @@ List iconItem() {
     Icons.assignment,
     Icons.list_alt,
     Icons.wifi_tethering,
-    Icons.movie,
+    // Icons.movie,
   ];
   List text = [
     '每日推荐',
     '歌单',
     '排行榜',
     '电台',
-    'MV',
+    // 'MV',
   ];
   List<Widget> widget = [];
 

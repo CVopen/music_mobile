@@ -16,7 +16,7 @@ class Request {
   Request._init() {
     _dio = Dio(BaseOptions(
       // baseUrl: 'http://192.168.1.106:3000/',
-      // baseUrl: 'http://192.168.1.109:3000/',
+      // baseUrl: 'http://192.168.1.108:3000/',
       baseUrl: 'http://192.168.1.8:3000/',
       connectTimeout: 5000,
       receiveTimeout: 5000,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/variable.dart';
 import 'recommend_music.dart';
 import 'album_list.dart';
+import 'top_list.dart';
 
 class ContainerTitle extends StatefulWidget {
   final List list;
@@ -20,6 +21,8 @@ class _ContainerTitleState extends State<ContainerTitle> {
         break;
       case '新碟上架':
         return AlbumList(albumListList: widget.list);
+      case '排行榜':
+        return TopList(toplist: widget.list);
       default:
         return;
     }

@@ -35,4 +35,10 @@ class ApiHome {
   getAlbumNewest(data) {
     return _request.get('/album/newest', data: data);
   }
+
+  // 所有榜单
+  getTopList() => _request.get('/toplist');
+
+  // 排行榜详情 传入排行榜id
+  getTopListDetail(data) => _request.get('/top/list', data: data);
 }

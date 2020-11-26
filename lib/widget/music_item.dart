@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_mobile/common/variable.dart';
 
+import 'image_radius.dart';
+
 class MusicItem extends StatefulWidget {
   final Map item;
 
@@ -19,15 +21,7 @@ class _MusicItemState extends State<MusicItem> {
       child: Stack(
         children: [
           Container(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                widget.item['picUrl'],
-                fit: BoxFit.fill,
-                width: 120,
-                height: 120,
-              ),
-            ),
+            child: ImageRadius(widget.item['picUrl'], 120.0, 120.0),
           ),
           Positioned(
             top: 0,
@@ -54,11 +48,3 @@ class _MusicItemState extends State<MusicItem> {
     );
   }
 }
-
-// child: ClipRRect(
-//               borderRadius: BorderRadius.circular(10),
-//               child: Image.network(
-//                 widget.swiperList[index]['pic'],
-//                 fit: BoxFit.fill,
-//               ),
-//             ),

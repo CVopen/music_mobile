@@ -20,6 +20,7 @@ class _AlbumListState extends State<AlbumList> {
     super.didUpdateWidget(oldWidget);
     if (widget.albumListList.length > 0) {
       final int count = (widget.albumListList.length / 3).round();
+      _list.clear();
       for (var i = 0; i < count; i++) {
         _list.add([
           widget.albumListList[i * 3],
