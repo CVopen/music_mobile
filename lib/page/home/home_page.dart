@@ -91,34 +91,33 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Container(
       // 处理异形屏幕 以及状态栏显示颜色
-      child: SafeArea(
-        left: false,
-        top: false,
-        right: false,
-        bottom: false,
-        child: Scaffold(
-          appBar: AppBar(
-            elevation: 0.0,
-            brightness: Brightness.light,
-            title: TitleWidget(),
-            actions: [
-              CircleLogo(),
-              SizedBox(
-                width: AppSize.BOX_SIZE_WIDTH_B,
-              )
-            ],
-          ),
-          drawer: DrawerWidget(),
-          body: _buildBodyWidget(),
-          bottomNavigationBar: Theme(
-            // 去除bottombar水波纹点击效果
-            data: ThemeData(
-              // brightness: Brightness.light,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          brightness: Brightness.light,
+          title: TitleWidget(),
+          actions: [
+            CircleLogo(
+              "http://images.shejidaren.com/wp-content/uploads/2014/09/0215109hx.jpg",
             ),
-            child: _buildBottomNavigationBarWidget(),
+            SizedBox(
+              width: AppSize.BOX_SIZE_WIDTH_B,
+            )
+          ],
+        ),
+        drawer: DrawerWidget(),
+        body: SafeArea(
+          top: true,
+          child: _buildBodyWidget(),
+        ),
+        bottomNavigationBar: Theme(
+          // 去除bottombar水波纹点击效果
+          data: ThemeData(
+            // brightness: Brightness.light,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
           ),
+          child: _buildBottomNavigationBarWidget(),
         ),
       ),
     );
@@ -127,7 +126,7 @@ class _HomePageState extends State<HomePage>
   // 使用PageView 做页面状态保持
   Widget _buildBodyWidget() {
     return PageView.builder(
-      physics: NeverScrollableScrollPhysics(), // 禁止页面左右滑动
+      // physics: NeverScrollableScrollPhysics(), // 禁止页面左右滑动
       controller: _controller,
       onPageChanged: (int index) {
         setState(() {

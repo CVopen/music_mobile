@@ -49,7 +49,10 @@ Widget avatarToLogin() {
         color: Color(AppColors.APP_THEME),
         child: Row(
           children: [
-            CircleLogo(type: 'my'),
+            CircleLogo(
+              "http://images.shejidaren.com/wp-content/uploads/2014/09/0215109hx.jpg",
+              type: 'me',
+            ),
             SizedBox(width: AppSize.BOX_SIZE_WIDTH_M),
             Text(
               '立即登录',

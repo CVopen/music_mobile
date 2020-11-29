@@ -22,7 +22,8 @@ class _SplashScreenState extends State<SplashScreen>
         if (status == AnimationStatus.completed) {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            '/home_page',
+            '/login_page',
+            // '/home_page',
             (Route<dynamic> route) => false,
           );
         }

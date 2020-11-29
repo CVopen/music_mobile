@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CircleLogo extends StatefulWidget {
   final String type;
+  final String logoUrl;
+  final double size;
 
-  const CircleLogo({Key key, this.type}) : super(key: key);
+  const CircleLogo(this.logoUrl, {Key key, this.type, this.size = 26.0})
+      : super(key: key);
 
   @override
   _CircleLogoState createState() => _CircleLogoState();
@@ -12,7 +16,6 @@ class CircleLogo extends StatefulWidget {
 class _CircleLogoState extends State<CircleLogo>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
-  String logoUrl;
 
   @override
   void initState() {
@@ -27,22 +30,32 @@ class _CircleLogoState extends State<CircleLogo>
         }
       });
     _controller.forward();
-    logoUrl =
-        'http://images.shejidaren.com/wp-content/uploads/2014/09/0215109hx.jpg';
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.type != null) {
+    if (widget.type == 'me') {
       return CircleAvatar(
-        radius: 26.0,
-        backgroundImage: NetworkImage(logoUrl),
+        radius: widget.size,
+        backgroundImage: NetworkImage(widget.logoUrl),
+      );
+    } else if (widget.type == 'logo') {
+      return RotationTransition(
+        turns: _controller,
+        child: Container(
+          width: 100.0,
+          height: 100.0,
+          child: SvgPicture.asset(
+            "assets/images/logo.svg",
+            color: Colors.pink[300],
+          ),
+        ),
       );
     } else {
       return RotationTransition(
         turns: _controller,
         child: CircleAvatar(
-          backgroundImage: NetworkImage(logoUrl),
+          backgroundImage: NetworkImage(widget.logoUrl),
         ),
       );
     }

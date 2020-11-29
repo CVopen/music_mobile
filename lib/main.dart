@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'common/variable.dart' show AppColors;
 
@@ -26,6 +27,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: MaterialApp(
+        // 设置支持语言类型
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('zh', 'CN'),
+          const Locale('en', 'US'),
+        ],
         title: '网抑云',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

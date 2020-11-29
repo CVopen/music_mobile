@@ -161,7 +161,7 @@ Widget gridIcon() {
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, //横轴四个子widget
+          crossAxisCount: 5, //横轴四个子widget
           childAspectRatio: 1.0 //宽高比为1时，子widget
           ),
       children: iconItem(),
@@ -176,14 +176,14 @@ List iconItem() {
     Icons.assignment,
     Icons.list_alt,
     Icons.wifi_tethering,
-    // Icons.movie,
+    Icons.movie,
   ];
   List text = [
     '每日推荐',
     '歌单',
     '排行榜',
     '电台',
-    // 'MV',
+    'MV',
   ];
   List<Widget> widget = [];
 
