@@ -33,6 +33,8 @@ dependencies:
   flutter_swiper: ^1.1.6
   carousel_slider: ^2.3.1
   flutter_svg: 0.19.1
+  fluttertoast: 7.1.5
+  provider: ^4.3.2+2
   # fluro: ^1.7.7
 
 dev_dependencies:
