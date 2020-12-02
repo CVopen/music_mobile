@@ -33,6 +33,12 @@ class _CircleLogoState extends State<CircleLogo>
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.type == 'me') {
       return CircleAvatar(

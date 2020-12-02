@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // 引入子页面
 import 'my_page.dart';
 import 'cloud_page.dart';
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    return Container(
+    return WillPopScopeTestRoute(
       // 处理异形屏幕 以及状态栏显示颜色
       child: Scaffold(
         appBar: AppBar(
@@ -152,6 +153,46 @@ class _HomePageState extends State<HomePage>
           _controller.jumpToPage(index);
         });
       },
+    );
+  }
+}
+
+class WillPopScopeTestRoute extends StatefulWidget {
+  final Widget child;
+
+  const WillPopScopeTestRoute({Key key, this.child}) : super(key: key);
+
+  @override
+  WillPopScopeTestRouteState createState() {
+    return new WillPopScopeTestRouteState();
+  }
+}
+
+class WillPopScopeTestRouteState extends State<WillPopScopeTestRoute> {
+  DateTime _lastPressedAt; //上次点击时间
+
+  @override
+  Widget build(BuildContext context) {
+    return new WillPopScope(
+      onWillPop: () async {
+        Fluttertoast.showToast(
+          msg: "再按一次退出",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 14.0,
+        );
+        if (_lastPressedAt == null ||
+            DateTime.now().difference(_lastPressedAt) > Duration(seconds: 1)) {
+          //两次点击间隔超过1秒则重新计时
+          _lastPressedAt = DateTime.now();
+          return false;
+        }
+        return true;
+      },
+      child: widget.child,
     );
   }
 }

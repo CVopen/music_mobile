@@ -51,28 +51,6 @@ class _FindPageState extends State<FindPage>
     return;
   }
 
-  // 生成随机数
-  // _createArr(count, max, [arr]) {
-  //   List result = [];
-  //   if (arr == null) arr = [];
-  //   result.addAll(arr);
-
-  //   int countFor = count - result.length;
-
-  //   for (var i = 0; i < countFor; i++) {
-  //     result.add(Random().nextInt(max));
-  //   }
-  //   var dedu = Set();
-  //   dedu.addAll(result);
-  //   dedu.toList();
-
-  //   if (dedu.length != count) {
-  //     List rand = _createArr(count, max, dedu.toList());
-  //     dedu.addAll(rand);
-  //   }
-  //   return dedu.toList();
-  // }
-
   // 获取banner
   Future _getSwiper() async {
     var res = await ApiHome().getBanner(data: {"type": 2});

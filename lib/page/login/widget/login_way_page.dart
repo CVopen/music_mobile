@@ -2,9 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:music_mobile/common/variable.dart';
+import 'package:music_mobile/store/login_info.dart';
 import 'package:music_mobile/widget/input_widget.dart';
 import 'package:music_mobile/api/login_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'dart:convert' as convert;
 
 class LoginWayPage extends StatefulWidget {
   final int count;
@@ -120,6 +125,16 @@ class _LoginWayPageState extends State<LoginWayPage> {
     switch (widget.count) {
       case 0:
         res = await ApiLogin().loginPhone(_login);
+        Provider.of<LoginInfo>(context, listen: false).loginSet =
+            convert.jsonEncode(res.data);
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userInfo', convert.jsonEncode(res.data));
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/new_page',
+          (route) => false,
+        );
         break;
       case 1:
         Fluttertoast.showToast(
@@ -151,8 +166,6 @@ class _LoginWayPageState extends State<LoginWayPage> {
         break;
       default:
     }
-
-    print(res.data);
   }
 
   // 发送验证码

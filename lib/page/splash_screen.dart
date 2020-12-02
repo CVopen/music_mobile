@@ -1,4 +1,9 @@
+import 'dart:convert' as convert;
+
 import 'package:flutter/material.dart';
+import 'package:music_mobile/store/login_info.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -18,12 +23,22 @@ class _SplashScreenState extends State<SplashScreen>
     _animation = Tween(begin: 0.7, end: 1.0).animate(_controller);
 
     _animation.addStatusListener(
-      (status) {
+      (status) async {
         if (status == AnimationStatus.completed) {
+          String _url = '/login_page';
+
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          // ignore: await_only_futures
+          String infos = await prefs.getString('userInfo');
+          print(infos);
+          if (infos != null) {
+            _url = '/home_page';
+            Provider.of<LoginInfo>(context, listen: false).loginSet = infos;
+          }
+
           Navigator.pushNamedAndRemoveUntil(
             context,
-            '/login_page',
-            // '/home_page',
+            _url,
             (Route<dynamic> route) => false,
           );
         }
@@ -35,8 +50,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
