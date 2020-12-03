@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 // import '../../api/home_page.dart';
 
-class CloudPage extends StatefulWidget {
+class MvPage extends StatefulWidget {
   @override
-  _CloudPageState createState() => _CloudPageState();
+  _MvPageState createState() => _MvPageState();
 }
 
-class _CloudPageState extends State<CloudPage>
-    with AutomaticKeepAliveClientMixin {
+class _MvPageState extends State<MvPage> with AutomaticKeepAliveClientMixin {
   int a = 0;
 
   @override

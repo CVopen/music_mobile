@@ -4,6 +4,8 @@ import 'package:music_mobile/api/home_page.dart';
 import 'dart:async';
 
 import 'package:music_mobile/common/variable.dart';
+import 'package:music_mobile/store/theme_model.dart';
+import 'package:provider/provider.dart';
 
 import 'widget/find_page/find_swiper.dart';
 import 'widget/find_page/container_title.dart';
@@ -108,7 +110,7 @@ class _FindPageState extends State<FindPage>
       child: ListView(
         children: [
           FindSwiper(swiperList: swiperList),
-          gridIcon(),
+          GridIconWidget(),
           ContainerTitle(
             list: personalizedList,
             title: '推荐歌单',
@@ -132,67 +134,71 @@ class _FindPageState extends State<FindPage>
   }
 }
 
-// 中间icon
-Widget gridIcon() {
-  return Container(
-    child: GridView(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5, //横轴四个子widget
-          childAspectRatio: 1.0 //宽高比为1时，子widget
-          ),
-      children: iconItem(),
-    ),
-  );
-}
-
-// 生成icon
-List iconItem() {
+// ignore: must_be_immutable
+class GridIconWidget extends StatelessWidget {
   List list = [
-    Icons.event_available,
-    Icons.assignment,
-    Icons.list_alt,
-    Icons.wifi_tethering,
-    Icons.movie,
+    {'icon': Icons.event_available, 'text': '每日推荐'},
+    {'icon': Icons.assignment, 'text': '歌单'},
+    {'icon': Icons.list_alt, 'text': '排行榜'},
+    {'icon': Icons.wifi_tethering, 'text': '电台'},
   ];
-  List text = [
-    '每日推荐',
-    '歌单',
-    '排行榜',
-    '电台',
-    'MV',
-  ];
-  List<Widget> widget = [];
+  List _iconItem() {
+    List<Widget> widget = [];
 
-  for (var i = 0; i < list.length; i++) {
-    widget.add(
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(AppSize.PADDING_SIZE_S),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(AppColors.IMPORTANT_COLOR),
+    for (var i = 0; i < list.length; i++) {
+      widget.add(IconFind(icon: list[i]['icon'], text: list[i]['text']));
+    }
+
+    return widget;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: GridView(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4, //横轴四个子widget
+            childAspectRatio: 1.0 //宽高比为1时，子widget
             ),
-            child: Icon(
-              list[i],
-              color: Color(AppColors.BACKGROUND_COLOR),
-            ),
-          ),
-          SizedBox(
-            height: AppSize.BOX_SIZE_HEIGHT_S,
-          ),
-          Text(
-            text[i],
-            style: TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
-          ),
-        ],
+        children: _iconItem(),
       ),
     );
   }
+}
 
-  return widget;
+class IconFind extends StatelessWidget {
+  final icon;
+  final text;
+
+  const IconFind({Key key, this.icon, this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: EdgeInsets.all(AppSize.PADDING_SIZE_S),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color:
+                Color(Provider.of<ThemeModel>(context, listen: true).getColor),
+          ),
+          child: Icon(
+            icon,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(
+          height: AppSize.BOX_SIZE_HEIGHT_S,
+        ),
+        Text(
+          text,
+          style: TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
+        ),
+      ],
+    );
+  }
 }

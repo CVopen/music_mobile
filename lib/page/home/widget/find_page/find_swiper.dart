@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:music_mobile/common/variable.dart';
+import 'package:music_mobile/store/theme_model.dart';
+import 'package:provider/provider.dart';
 
 class FindSwiper extends StatefulWidget {
   final List swiperList;
@@ -37,9 +39,8 @@ class _FindSwiperState extends State<FindSwiper> {
         pagination: SwiperPagination(
           margin: EdgeInsets.all(15.0),
           builder: DotSwiperPaginationBuilder(
-            activeColor: Color(
-              AppColors.IMPORTANT_COLOR,
-            ),
+            activeColor:
+                Color(Provider.of<ThemeModel>(context, listen: true).getColor),
             color: Color(AppColors.FONT_COLOR),
             size: 6,
             activeSize: 6,

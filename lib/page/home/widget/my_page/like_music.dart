@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:music_mobile/store/theme_model.dart';
+import 'package:provider/provider.dart';
 import '../../../../common/variable.dart';
 
 // 我喜欢的音乐
@@ -30,7 +32,9 @@ class LikeMusic extends StatelessWidget {
                     width: 50.0,
                     height: 50.0,
                     decoration: BoxDecoration(
-                      color: Color(AppColors.IMPORTANT_COLOR),
+                      color: Color(
+                          Provider.of<ThemeModel>(context, listen: true)
+                              .getColor),
                       borderRadius: BorderRadius.all(
                         Radius.circular(AppSize.BORDER_RADIUS_S),
                       ),
@@ -42,7 +46,8 @@ class LikeMusic extends StatelessWidget {
                   left: 13.0,
                   child: Icon(
                     Icons.favorite,
-                    color: Color(AppColors.IMPORTANT_COLOR),
+                    color: Color(Provider.of<ThemeModel>(context, listen: true)
+                        .getColor),
                     size: 24.0,
                   ),
                 ),

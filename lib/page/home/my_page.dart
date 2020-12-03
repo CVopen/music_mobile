@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:music_mobile/store/theme_model.dart';
+import 'package:provider/provider.dart';
 import '../../common/variable.dart' show AppSize, AppColors;
 
 import 'widget/circle_logo.dart';
@@ -22,7 +24,7 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
       shrinkWrap: true,
       children: [
         avatarToLogin(),
-        gridIcon(),
+        GridIconWidget(),
         LikeMusic(),
         SetSongList(
           title: '创建歌单',
@@ -73,72 +75,101 @@ Widget avatarToLogin() {
   );
 }
 
-// 中间icon
-Widget gridIcon() {
-  return Container(
-    margin: EdgeInsets.only(
-        left: AppSize.PADDING_SIZE, right: AppSize.PADDING_SIZE),
-    decoration: BoxDecoration(
-      color: Color(AppColors.BACKGROUND_COLOR),
-      borderRadius: BorderRadius.all(
-        Radius.circular(AppSize.BORDER_RADIUS_S),
-      ),
-    ),
-    child: GridView(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, //横轴四个子widget
-          childAspectRatio: 1.0 //宽高比为1时，子widget
-          ),
-      children: iconItem(),
-    ),
-  );
-}
+// // 中间icon
+// Widget gridIcon() {
+//   return Container(
+//     margin: EdgeInsets.only(
+//         left: AppSize.PADDING_SIZE, right: AppSize.PADDING_SIZE),
+//     decoration: BoxDecoration(
+//       color: Color(AppColors.BACKGROUND_COLOR),
+//       borderRadius: BorderRadius.all(
+//         Radius.circular(AppSize.BORDER_RADIUS_S),
+//       ),
+//     ),
+//     child: GridView(
+//       shrinkWrap: true,
+//       physics: NeverScrollableScrollPhysics(),
+//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//           crossAxisCount: 4, //横轴四个子widget
+//           childAspectRatio: 1.0 //宽高比为1时，子widget
+//           ),
+//       children: iconItem(),
+//     ),
+//   );
+// }
 
-// 生成icon
-List iconItem() {
+// ignore: must_be_immutable
+class GridIconWidget extends StatelessWidget {
   List list = [
-    Icons.cloud_download,
-    Icons.cloud_upload,
-    Icons.check_circle,
-    Icons.play_circle_fill,
-    Icons.people_alt,
-    Icons.star,
-    Icons.my_library_music_sharp,
+    {'icon': Icons.cloud_download, 'text': '本地音乐'},
+    {'icon': Icons.cloud_upload, 'text': '云盘'},
+    {'icon': Icons.check_circle, 'text': '已购'},
+    {'icon': Icons.play_circle_fill, 'text': '最近播放'},
+    {'icon': Icons.people_alt, 'text': '我的好友'},
+    {'icon': Icons.star, 'text': '收藏'},
+    {'icon': Icons.my_library_music_sharp, 'text': '我的电台'},
   ];
-  List text = [
-    '本地音乐',
-    '云盘',
-    '已购',
-    '最近播放',
-    '我的好友',
-    '收藏',
-    '我的电台',
-  ];
-  List<Widget> widget = [];
 
-  for (var i = 0; i < list.length; i++) {
-    widget.add(
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(
-            list[i],
-            color: Color(AppColors.IMPORTANT_COLOR),
-          ),
-          SizedBox(
-            height: AppSize.BOX_SIZE_HEIGHT_S,
-          ),
-          Text(
-            text[i],
-            style: TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
-          ),
-        ],
+  List _iconItem() {
+    List<Widget> widget = [];
+
+    for (var i = 0; i < list.length; i++) {
+      widget.add(IconWidget(
+        icon: list[i]['icon'],
+        text: list[i]['text'],
+      ));
+    }
+
+    return widget;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+          left: AppSize.PADDING_SIZE, right: AppSize.PADDING_SIZE),
+      decoration: BoxDecoration(
+        color: Color(AppColors.BACKGROUND_COLOR),
+        borderRadius: BorderRadius.all(
+          Radius.circular(AppSize.BORDER_RADIUS_S),
+        ),
+      ),
+      child: GridView(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4, //横轴四个子widget
+            childAspectRatio: 1.0 //宽高比为1时，子widget
+            ),
+        children: _iconItem(),
       ),
     );
   }
+}
 
-  return widget;
+class IconWidget extends StatelessWidget {
+  final icon;
+  final text;
+
+  const IconWidget({Key key, this.icon, this.text}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          color: Color(Provider.of<ThemeModel>(context, listen: true).getColor),
+        ),
+        SizedBox(
+          height: AppSize.BOX_SIZE_HEIGHT_S,
+        ),
+        Text(
+          text,
+          style: TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
+        ),
+      ],
+    );
+  }
 }

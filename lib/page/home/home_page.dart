@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music_mobile/store/login_info.dart';
+import 'package:music_mobile/store/theme_model.dart';
+import 'package:provider/provider.dart';
 // 引入子页面
 import 'my_page.dart';
-import 'cloud_page.dart';
+import 'mv_page.dart';
 import 'find_page.dart';
 import 'video_page.dart';
 // 引入样式
@@ -22,9 +25,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  List<BottomNavigationBarItem> _bottomNavigationBarItems;
+  List<BottomNavigationBarItem> _bottomNavigationBarItems = [];
 
   List<Widget> _page;
+
+  List<Map> _bottomIcon = [
+    {
+      'icon': Icon(Icons.account_circle_outlined),
+      'activeIcon': Icon(Icons.account_circle),
+      'text': '我的'
+    },
+    {
+      'icon': Icon(Icons.search),
+      'activeIcon': Icon(Icons.search_rounded),
+      'text': '发现'
+    },
+    {
+      'icon': Icon(Icons.group_work_outlined),
+      'activeIcon': Icon(Icons.group_work),
+      'text': 'MV'
+    },
+    {
+      'icon': Icon(Icons.play_circle_outline),
+      'activeIcon': Icon(Icons.play_circle_fill),
+      'text': '视频'
+    },
+  ];
+
+  Map _loginInfo;
 
   int _currentIndex;
 
@@ -32,53 +60,34 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
-    _bottomNavigationBarItems = [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.account_circle_outlined),
-        activeIcon: Icon(
-          Icons.account_circle,
-          color: Color(AppColors.IMPORTANT_COLOR),
-        ),
-        // ignore: deprecated_member_use
-        title: Text('我的'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.search),
-        activeIcon: Icon(
-          Icons.search_rounded,
-          color: Color(AppColors.IMPORTANT_COLOR),
-        ),
-        // ignore: deprecated_member_use
-        title: Text('发现'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.cloud_queue),
-        activeIcon: Icon(
-          Icons.cloud,
-          color: Color(AppColors.IMPORTANT_COLOR),
-        ),
-        // ignore: deprecated_member_use
-        title: Text('云村'),
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.play_circle_outline),
-        activeIcon: Icon(
-          Icons.play_circle_fill,
-          color: Color(AppColors.IMPORTANT_COLOR),
-        ),
-        // ignore: deprecated_member_use
-        title: Text('视频'),
-      ),
-    ];
 
-    _page = [
-      MyPage(),
-      FindPage(),
-      CloudPage(),
-      VideoPage(),
-    ];
+    setState(() {
+      _loginInfo = Provider.of<LoginInfo>(context, listen: false).loginGet;
+      _page = [
+        MyPage(),
+        FindPage(),
+        MvPage(),
+        VideoPage(),
+      ];
+    });
     _currentIndex = 1;
     _controller = PageController(initialPage: 1);
+    _createBottom();
+  }
+
+  _createBottom() {
+    _bottomIcon.forEach((element) {
+      setState(() {
+        _bottomNavigationBarItems.add(
+          BottomNavigationBarItem(
+            icon: element['icon'],
+            activeIcon: element['activeIcon'],
+            // ignore: deprecated_member_use
+            title: Text(element['text']),
+          ),
+        );
+      });
+    });
   }
 
   @override
@@ -99,7 +108,7 @@ class _HomePageState extends State<HomePage>
           title: TitleWidget(),
           actions: [
             CircleLogo(
-              "http://images.shejidaren.com/wp-content/uploads/2014/09/0215109hx.jpg",
+              _loginInfo['profile']['avatarUrl'],
             ),
             SizedBox(
               width: AppSize.BOX_SIZE_WIDTH_B,
@@ -145,7 +154,8 @@ class _HomePageState extends State<HomePage>
       items: _bottomNavigationBarItems.map((e) => e).toList(),
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Color(AppColors.IMPORTANT_COLOR),
+      selectedItemColor:
+          Color(Provider.of<ThemeModel>(context, listen: true).getColor),
       selectedFontSize: AppSize.FONT_SIZE_S,
       onTap: (index) {
         setState(() {

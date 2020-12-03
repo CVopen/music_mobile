@@ -7,9 +7,6 @@ import 'package:music_mobile/widget/input_widget.dart';
 import 'package:music_mobile/api/login_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'dart:convert' as convert;
 
 class LoginWayPage extends StatefulWidget {
   final int count;
@@ -121,15 +118,13 @@ class _LoginWayPageState extends State<LoginWayPage> {
 
   // 登陆
   Future _loginFunc() async {
+    FocusScope.of(context).requestFocus(FocusNode());
     var res;
     switch (widget.count) {
       case 0:
         res = await ApiLogin().loginPhone(_login);
-        Provider.of<LoginInfo>(context, listen: false).loginSet =
-            convert.jsonEncode(res.data);
+        Provider.of<LoginInfo>(context, listen: false).loginSet = res.data;
 
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userInfo', convert.jsonEncode(res.data));
         Navigator.pushNamedAndRemoveUntil(
           context,
           '/new_page',

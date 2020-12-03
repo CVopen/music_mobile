@@ -1,7 +1,7 @@
-import 'dart:convert' as convert;
-
 import 'package:flutter/material.dart';
+import 'package:music_mobile/common/variable.dart';
 import 'package:music_mobile/store/login_info.dart';
+import 'package:music_mobile/store/theme_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,7 +30,16 @@ class _SplashScreenState extends State<SplashScreen>
           SharedPreferences prefs = await SharedPreferences.getInstance();
           // ignore: await_only_futures
           String infos = await prefs.getString('userInfo');
-          print(infos);
+          // ignore: await_only_futures
+          int color = await prefs.getInt('color');
+
+          if (color == null) {
+            Provider.of<ThemeModel>(context, listen: false).setColor =
+                AppColors.IMPORTANT_COLOR;
+          } else {
+            Provider.of<ThemeModel>(context, listen: false).setColor = color;
+          }
+
           if (infos != null) {
             _url = '/home_page';
             Provider.of<LoginInfo>(context, listen: false).loginSet = infos;
