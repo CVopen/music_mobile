@@ -45,7 +45,7 @@ class _LoginWayTitleState extends State<LoginWayTitle>
     _list.forEach((element) {
       _listWidget.add(
         Container(
-          margin: EdgeInsets.all(AppSize.PADDING_SIZE_B),
+          margin: const EdgeInsets.all(AppSize.PADDING_SIZE_B),
           child: Text.rich(
             TextSpan(
               text: element,

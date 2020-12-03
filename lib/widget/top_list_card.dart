@@ -56,7 +56,7 @@ class MusicItemListView extends StatelessWidget {
     final _size = MediaQuery.of(context).size;
     final _width = _size.width;
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         bottom: AppSize.PADDING_SIZE_B,
         left: AppSize.PADDING_SIZE_B,
         right: AppSize.PADDING_SIZE_B,
@@ -78,7 +78,7 @@ class MusicItemListView extends StatelessWidget {
                 top: AppSize.PADDING_SIZE,
                 bottom: AppSize.PADDING_SIZE,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
                     width: 0.5,
@@ -95,7 +95,7 @@ class MusicItemListView extends StatelessWidget {
                     flex: 1,
                     child: Text(
                       item['name'],
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(AppColors.FONT_EM_COLOR),
                         fontSize: AppSize.FONT_SIZE_M,
                       ),
@@ -107,7 +107,7 @@ class MusicItemListView extends StatelessWidget {
                     flex: 1,
                     child: Text(
                       item["ar"][0]["name"],
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(AppColors.FONT_COLOR),
                         fontSize: AppSize.FONT_SIZE_S,
                       ),
@@ -119,7 +119,7 @@ class MusicItemListView extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: AppSize.BOX_SIZE_WIDTH_M,
           ),
         ],

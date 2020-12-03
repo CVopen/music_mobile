@@ -9,7 +9,7 @@ import 'mv_page.dart';
 import 'find_page.dart';
 import 'video_page.dart';
 // 引入样式
-import '../../common/variable.dart' show AppColors, AppSize;
+import '../../common/variable.dart' show AppSize;
 // 引入home widget
 import 'widget/title_widget.dart';
 import 'widget/circle_logo.dart';
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage>
             CircleLogo(
               _loginInfo['profile']['avatarUrl'],
             ),
-            SizedBox(
+            const SizedBox(
               width: AppSize.BOX_SIZE_WIDTH_B,
             )
           ],
@@ -174,7 +174,7 @@ class WillPopScopeTestRoute extends StatefulWidget {
 
   @override
   WillPopScopeTestRouteState createState() {
-    return new WillPopScopeTestRouteState();
+    return WillPopScopeTestRouteState();
   }
 }
 
@@ -183,7 +183,7 @@ class WillPopScopeTestRouteState extends State<WillPopScopeTestRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
+    return WillPopScope(
       onWillPop: () async {
         Fluttertoast.showToast(
           msg: "再按一次退出",

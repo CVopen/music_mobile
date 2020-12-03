@@ -128,7 +128,7 @@ class _FindPageState extends State<FindPage>
           )
         ],
       ),
-      color: Color(AppColors.IMPORTANT_COLOR),
+      color: Color(Provider.of<ThemeModel>(context, listen: true).getColor),
       onRefresh: _refresh,
     );
   }
@@ -157,8 +157,8 @@ class GridIconWidget extends StatelessWidget {
     return Container(
       child: GridView(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, //横轴四个子widget
             childAspectRatio: 1.0 //宽高比为1时，子widget
             ),
@@ -180,7 +180,7 @@ class IconFind extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          padding: EdgeInsets.all(AppSize.PADDING_SIZE_S),
+          padding: const EdgeInsets.all(AppSize.PADDING_SIZE_S),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color:
@@ -191,7 +191,7 @@ class IconFind extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: AppSize.BOX_SIZE_HEIGHT_S,
         ),
         Text(

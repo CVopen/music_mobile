@@ -117,14 +117,14 @@ class _SongItemState extends State<SongItem> {
                 child: Container(
                   width: 50.0,
                   height: 50.0,
-                  margin: EdgeInsets.only(right: AppSize.PADDING_SIZE_S),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.only(right: AppSize.PADDING_SIZE_S),
+                  decoration: const BoxDecoration(
                     color: Color(AppColors.BACKGROUND_COLOR_DEEP),
                     borderRadius: BorderRadius.all(
                       Radius.circular(AppSize.BORDER_RADIUS_S),
                     ),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(Icons.music_note),
                   ),
                 ),
@@ -134,7 +134,7 @@ class _SongItemState extends State<SongItem> {
                 child: Container(
                   width: 50.0,
                   height: 50.0,
-                  margin: EdgeInsets.only(right: AppSize.PADDING_SIZE_S),
+                  margin: const EdgeInsets.only(right: AppSize.PADDING_SIZE_S),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
@@ -149,13 +149,13 @@ class _SongItemState extends State<SongItem> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     '123123321',
                     style: TextStyle(
                       fontSize: AppSize.FONT_SIZE_M,
                     ),
                   ),
-                  Text(
+                  const Text(
                     '0首',
                     style: TextStyle(
                       color: Color(AppColors.FONT_COLOR),
@@ -164,11 +164,11 @@ class _SongItemState extends State<SongItem> {
                   )
                 ],
               ),
-              Expanded(
+              const Expanded(
                 child: Text(''),
               ),
               IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.more_vert,
                   size: 20,
                   color: Color(AppColors.FONT_COLOR),

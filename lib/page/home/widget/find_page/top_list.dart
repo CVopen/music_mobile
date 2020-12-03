@@ -44,13 +44,13 @@ class _TopListState extends State<TopList> {
                         children: [
                           Text(
                             index['name'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: AppSize.FONT_SIZE_B,
                               fontWeight: FontWeight.w600,
                               height: 1,
                             ),
                           ),
-                          Icon(
+                          const Icon(
                             Icons.keyboard_arrow_right,
                             size: 24,
                           ),

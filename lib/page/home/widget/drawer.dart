@@ -68,15 +68,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     _loginInfo['profile']['avatarUrl'],
                     type: 'me',
                   ),
-                  SizedBox(width: AppSize.PADDING_SIZE_B),
+                  const SizedBox(width: AppSize.PADDING_SIZE_B),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         _loginInfo['profile']['nickname'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
-                          fontSize: AppSize.FONT_SIZE_B,
+                          fontSize: AppSize.FONT_SIZE,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -85,7 +85,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             width * 0.9 - 80 - AppSize.PADDING_SIZE_B * 3 - 100,
                         child: Text(
                           _loginInfo['profile']['signature'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white54,
                             fontSize: AppSize.FONT_SIZE_S,
                           ),
@@ -95,11 +95,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       )
                     ],
                   ),
-                  Expanded(child: Text('')),
+                  const Expanded(child: Text('')),
                   MaterialButton(
                     color: Colors.white54,
                     textColor: Colors.white,
-                    child: Text('退出登录'),
+                    child: const Text('退出登录'),
                     minWidth: 80,
                     height: 30,
                     onPressed: () {
@@ -124,7 +124,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
               trailing: Text(
                 '${_loginInfo['profile']['eventCount']}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(AppColors.APP_THEME),
                 ),
               ),
@@ -138,7 +138,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
               trailing: Text(
                 '${_loginInfo['profile']['follows']}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(AppColors.APP_THEME),
                 ),
               ),
@@ -152,15 +152,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
               trailing: Text(
                 '${_loginInfo['profile']['followeds']}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(AppColors.APP_THEME),
                 ),
               ),
             ),
-            const Text(
-              '更换主题',
-              style: TextStyle(
-                color: Colors.white,
+            Container(
+              margin: EdgeInsets.all(AppSize.PADDING_SIZE_B),
+              child: const Text(
+                '更换主题',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: AppSize.FONT_SIZE_B,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(

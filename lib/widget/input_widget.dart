@@ -101,26 +101,26 @@ class _InputWidgetState extends State<InputWidget> {
           ],
           onChanged: widget.callback,
           obscureText: (_isShow is bool) ? _isShow : false,
-          cursorColor: Color(AppColors.IMPORTANT_COLOR),
+          cursorColor: const Color(AppColors.IMPORTANT_COLOR),
           decoration: InputDecoration(
             hintText: widget.placeholder,
             prefixIcon: Icon(
               widget.prefixIcon,
-              color: Color(AppColors.FONT_COLOR),
+              color: const Color(AppColors.FONT_COLOR),
             ),
             icon: widget.icon != null
                 ? Icon(
                     widget.icon,
-                    color: Color(AppColors.FONT_COLOR),
+                    color: const Color(AppColors.FONT_COLOR),
                   )
                 : null,
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Color(AppColors.IMPORTANT_COLOR),
                 width: 0.5,
               ),
             ),
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 width: 0.5,
               ),

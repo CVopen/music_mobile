@@ -23,17 +23,17 @@ class _MusicItemListViewState extends State<MusicItemListView> {
           Container(
             child: ImageRadius(widget.item['picUrl'], 80.0, 80.0),
           ),
-          SizedBox(
+          const SizedBox(
             width: AppSize.BOX_SIZE_WIDTH_M,
           ),
           Expanded(
             child: Container(
               height: 80,
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: AppSize.PADDING_SIZE,
                 bottom: AppSize.PADDING_SIZE,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
                     width: 0.5,
@@ -55,14 +55,14 @@ class _MusicItemListViewState extends State<MusicItemListView> {
                         children: [
                           Text(
                             widget.item['company'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(AppColors.FONT_EM_COLOR),
                               fontSize: AppSize.FONT_SIZE_M,
                             ),
                           ),
                           Text(
                             ' - ${widget.item['artist']['name']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(AppColors.FONT_COLOR),
                               fontSize: AppSize.FONT_SIZE_S,
                             ),
@@ -77,7 +77,7 @@ class _MusicItemListViewState extends State<MusicItemListView> {
                       widget.item['name'],
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(AppColors.FONT_COLOR),
                         fontSize: AppSize.FONT_SIZE_S,
                       ),
@@ -87,7 +87,7 @@ class _MusicItemListViewState extends State<MusicItemListView> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: AppSize.BOX_SIZE_WIDTH_M,
           ),
         ],

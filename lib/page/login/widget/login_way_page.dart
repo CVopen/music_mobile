@@ -212,7 +212,7 @@ class _LoginWayPageState extends State<LoginWayPage> {
     final _size = MediaQuery.of(context).size;
     final _width = _size.width;
     return Container(
-      margin: EdgeInsets.all(AppSize.PADDING_SIZE),
+      margin: const EdgeInsets.all(AppSize.PADDING_SIZE),
       child: Column(
         children: [
           InputWidget(
@@ -253,19 +253,19 @@ class _LoginWayPageState extends State<LoginWayPage> {
             code: _way[1]['code'] == true ? _text : null,
             codeFun: _sendCode,
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           MaterialButton(
-            color: Color(AppColors.IMPORTANT_COLOR),
-            shape: RoundedRectangleBorder(
+            color: const Color(AppColors.IMPORTANT_COLOR),
+            shape: const RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.all(
                 Radius.circular(50),
               ),
             ),
             textColor: Colors.white,
-            child: Text('登 录'),
+            child: const Text('登 录'),
             minWidth: _width - 120,
             onPressed: _loginFunc,
           )

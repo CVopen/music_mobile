@@ -28,14 +28,14 @@ class _MusicItemState extends State<MusicItem> {
             right: 5,
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.play_arrow_outlined,
                   color: Color(AppColors.BACKGROUND_COLOR),
                   size: AppSize.ICON_SIZE,
                 ),
                 Text(
                   '${widget.item['playCount']}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(AppColors.BACKGROUND_COLOR),
                     fontSize: AppSize.FONT_SIZE_S,
                   ),

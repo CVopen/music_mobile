@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:music_mobile/store/login_info.dart';
-import 'package:provider/provider.dart';
+// import 'package:music_mobile/store/login_info.dart';
+// import 'package:provider/provider.dart';
 
 class NewPage extends StatefulWidget {
   final Map arguments;
@@ -13,7 +13,7 @@ class _NewPageState extends State<NewPage> {
   @override
   void initState() {
     super.initState();
-    var info = Provider.of<LoginInfo>(context, listen: false).loginGet;
+    // var info = Provider.of<LoginInfo>(context, listen: false).loginGet;
     // print(info);
   }
 

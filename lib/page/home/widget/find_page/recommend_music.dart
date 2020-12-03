@@ -36,14 +36,14 @@ class _RecommendMusicState extends State<RecommendMusic> {
                     widget.personalizedList[index]['name'],
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: AppSize.FONT_SIZE_S),
+                    style: const TextStyle(fontSize: AppSize.FONT_SIZE_S),
                   ),
                 ],
               ),
             );
           }
           return Container(
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
               top: AppSize.PADDING_SIZE_B,
               left: AppSize.PADDING_SIZE_B,
               bottom: AppSize.PADDING_SIZE_B,
@@ -58,7 +58,7 @@ class _RecommendMusicState extends State<RecommendMusic> {
                   widget.personalizedList[index]['name'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: AppSize.FONT_SIZE_S),
+                  style: const TextStyle(fontSize: AppSize.FONT_SIZE_S),
                 ),
               ],
             ),

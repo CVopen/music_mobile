@@ -51,7 +51,7 @@ class _TabbarWidgetState extends State<TabbarWidget>
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             child: Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 left: AppSize.PADDING_SIZE_B,
                 right: AppSize.PADDING_SIZE_B,
               ),

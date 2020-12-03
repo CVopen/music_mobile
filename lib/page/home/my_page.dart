@@ -26,11 +26,11 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
         avatarToLogin(),
         GridIconWidget(),
         LikeMusic(),
-        SetSongList(
+        const SetSongList(
           title: '创建歌单',
           total: '暂无创建的歌单',
         ),
-        SetSongList(
+        const SetSongList(
           title: '收藏歌单',
           total: '暂无收藏的歌单',
         ),
@@ -51,12 +51,12 @@ Widget avatarToLogin() {
         color: Color(AppColors.APP_THEME),
         child: Row(
           children: [
-            CircleLogo(
+            const CircleLogo(
               "http://images.shejidaren.com/wp-content/uploads/2014/09/0215109hx.jpg",
               type: 'me',
             ),
             SizedBox(width: AppSize.BOX_SIZE_WIDTH_M),
-            Text(
+            const Text(
               '立即登录',
               style: TextStyle(
                 color: Color(AppColors.FONT_EM_COLOR),
@@ -64,7 +64,7 @@ Widget avatarToLogin() {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward,
               size: 20,
             )
@@ -74,29 +74,6 @@ Widget avatarToLogin() {
     ),
   );
 }
-
-// // 中间icon
-// Widget gridIcon() {
-//   return Container(
-//     margin: EdgeInsets.only(
-//         left: AppSize.PADDING_SIZE, right: AppSize.PADDING_SIZE),
-//     decoration: BoxDecoration(
-//       color: Color(AppColors.BACKGROUND_COLOR),
-//       borderRadius: BorderRadius.all(
-//         Radius.circular(AppSize.BORDER_RADIUS_S),
-//       ),
-//     ),
-//     child: GridView(
-//       shrinkWrap: true,
-//       physics: NeverScrollableScrollPhysics(),
-//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//           crossAxisCount: 4, //横轴四个子widget
-//           childAspectRatio: 1.0 //宽高比为1时，子widget
-//           ),
-//       children: iconItem(),
-//     ),
-//   );
-// }
 
 // ignore: must_be_immutable
 class GridIconWidget extends StatelessWidget {

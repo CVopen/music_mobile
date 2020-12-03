@@ -18,15 +18,15 @@ Function myShowModalBottomSheet(context, double height, count) {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(AppSize.PADDING_SIZE_B),
+              padding: const EdgeInsets.all(AppSize.PADDING_SIZE_B),
               child: Text(
                 '歌单$count',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(AppColors.FONT_COLOR),
                 ),
               ),
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
                     width: 1,
@@ -41,12 +41,12 @@ Function myShowModalBottomSheet(context, double height, count) {
                 print('我是去登录');
               },
               child: Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: AppSize.PADDING_SIZE_S,
                   bottom: AppSize.PADDING_SIZE_S,
                   left: AppSize.PADDING_SIZE,
                 ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
                       width: 1,
@@ -57,12 +57,12 @@ Function myShowModalBottomSheet(context, double height, count) {
                 ),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.delete,
                       size: 28,
                     ),
-                    SizedBox(width: AppSize.PADDING_SIZE),
-                    Text('删除'),
+                    const SizedBox(width: AppSize.PADDING_SIZE),
+                    const Text('删除'),
                   ],
                 ),
               ),

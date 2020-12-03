@@ -19,7 +19,7 @@ class _TitleBarWidgetState extends State<TitleBarWidget> {
           child: Text.rich(
             TextSpan(
               text: widget.text,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
               ),
               recognizer: TapGestureRecognizer()

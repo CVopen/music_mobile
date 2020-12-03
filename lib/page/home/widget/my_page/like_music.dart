@@ -8,13 +8,13 @@ class LikeMusic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         top: AppSize.PADDING_SIZE,
         left: AppSize.PADDING_SIZE,
         right: AppSize.PADDING_SIZE,
       ),
-      padding: EdgeInsets.all(AppSize.PADDING_SIZE_B),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(AppSize.PADDING_SIZE_B),
+      decoration: const BoxDecoration(
         color: Color(AppColors.BACKGROUND_COLOR),
         borderRadius: BorderRadius.all(
           Radius.circular(AppSize.BORDER_RADIUS_S),
@@ -23,7 +23,7 @@ class LikeMusic extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.only(right: AppSize.PADDING_SIZE_S),
+            margin: const EdgeInsets.only(right: AppSize.PADDING_SIZE_S),
             child: Stack(
               children: [
                 Opacity(
@@ -35,7 +35,7 @@ class LikeMusic extends StatelessWidget {
                       color: Color(
                           Provider.of<ThemeModel>(context, listen: true)
                               .getColor),
-                      borderRadius: BorderRadius.all(
+                      borderRadius: const BorderRadius.all(
                         Radius.circular(AppSize.BORDER_RADIUS_S),
                       ),
                     ),
@@ -54,10 +54,10 @@ class LikeMusic extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
+          const Expanded(
             child: Text('我喜欢的音乐'),
           ),
-          Text(
+          const Text(
             '0 首',
             style: TextStyle(color: Color(AppColors.FONT_COLOR)),
           ),

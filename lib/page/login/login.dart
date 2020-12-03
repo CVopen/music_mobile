@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(height: AppSize.PADDING_SIZE_S),
+                            const SizedBox(height: AppSize.PADDING_SIZE_S),
                             LoginWayTitle(
                               (value) {
                                 setState(() {

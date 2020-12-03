@@ -38,7 +38,7 @@ class _AlbumListState extends State<AlbumList> {
         items: _list.map(
           (index) {
             return Container(
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: AppSize.PADDING_SIZE_B,
                 bottom: AppSize.PADDING_SIZE_B,
               ),
@@ -47,7 +47,7 @@ class _AlbumListState extends State<AlbumList> {
                 children: [
                   MusicItemListView(item: index[0]),
                   Container(
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       top: AppSize.PADDING_SIZE_B,
                       bottom: AppSize.PADDING_SIZE_B,
                     ),

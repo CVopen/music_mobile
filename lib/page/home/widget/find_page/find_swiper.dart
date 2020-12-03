@@ -22,7 +22,7 @@ class _FindSwiperState extends State<FindSwiper> {
         key: UniqueKey(),
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            margin: EdgeInsets.all(AppSize.PADDING_SIZE_B),
+            margin: const EdgeInsets.all(AppSize.PADDING_SIZE_B),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
@@ -37,11 +37,11 @@ class _FindSwiperState extends State<FindSwiper> {
         autoplayDelay: 5000,
         duration: 600,
         pagination: SwiperPagination(
-          margin: EdgeInsets.all(15.0),
+          margin: const EdgeInsets.all(15.0),
           builder: DotSwiperPaginationBuilder(
             activeColor:
                 Color(Provider.of<ThemeModel>(context, listen: true).getColor),
-            color: Color(AppColors.FONT_COLOR),
+            color: const Color(AppColors.FONT_COLOR),
             size: 6,
             activeSize: 6,
           ),
