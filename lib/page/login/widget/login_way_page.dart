@@ -127,7 +127,7 @@ class _LoginWayPageState extends State<LoginWayPage> {
 
         Navigator.pushNamedAndRemoveUntil(
           context,
-          '/new_page',
+          '/home_page',
           (route) => false,
         );
         break;

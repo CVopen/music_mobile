@@ -12,10 +12,10 @@ class LoginInfo with ChangeNotifier {
 
   set loginSet(data) {
     var _info = data;
-    if (data == 'remove') {
+    if (_info == 'remove') {
       _removePrefes();
     } else {
-      if (!(data is Map)) {
+      if (!(_info is Map)) {
         _info = convert.jsonDecode(_info);
       }
       info = _info;

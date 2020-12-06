@@ -179,18 +179,19 @@ class IconFind extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          padding: const EdgeInsets.all(AppSize.PADDING_SIZE_S),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color:
-                Color(Provider.of<ThemeModel>(context, listen: true).getColor),
-          ),
-          child: Icon(
-            icon,
-            color: Colors.white,
-          ),
-        ),
+        Consumer<ThemeModel>(builder: (context, t, child) {
+          return Container(
+            padding: const EdgeInsets.all(AppSize.PADDING_SIZE_S),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(t.getColor),
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
+          );
+        }),
         const SizedBox(
           height: AppSize.BOX_SIZE_HEIGHT_S,
         ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:music_mobile/api/home_page.dart';
+import 'package:music_mobile/store/login_info.dart';
 import 'package:music_mobile/store/theme_model.dart';
 import 'package:provider/provider.dart';
 import '../../common/variable.dart' show AppSize, AppColors;
@@ -16,6 +18,21 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+  int _level;
+
+  @override
+  void initState() {
+    super.initState();
+    this._getLevel();
+  }
+
+  _getLevel() {
+    ApiHome().getLevel().then((res) {
+      setState(() {
+        _level = res.data['data']['level'];
+      });
+    });
+  }
 
   @override
   // ignore: must_call_super
@@ -23,7 +40,7 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
     return ListView(
       shrinkWrap: true,
       children: [
-        avatarToLogin(),
+        AvatarToLogin(level: _level),
         GridIconWidget(),
         LikeMusic(),
         const SetSongList(
@@ -39,40 +56,51 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   }
 }
 
-// logo
-Widget avatarToLogin() {
-  return Container(
-    padding: EdgeInsets.all(AppSize.PADDING_SIZE),
-    child: InkWell(
-      onTap: () {
-        print('我是去登录');
-      },
-      child: Container(
-        color: Color(AppColors.APP_THEME),
-        child: Row(
-          children: [
-            const CircleLogo(
-              "http://images.shejidaren.com/wp-content/uploads/2014/09/0215109hx.jpg",
-              type: 'me',
+class AvatarToLogin extends StatelessWidget {
+  final int level;
+
+  const AvatarToLogin({Key key, this.level}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(AppSize.PADDING_SIZE),
+      child: Consumer<LoginInfo>(
+        builder: (context, t, child) {
+          return Container(
+            color: Color(AppColors.APP_THEME),
+            child: Row(
+              children: [
+                CircleLogo(
+                  t.loginGet['profile']['avatarUrl'],
+                  type: 'me',
+                ),
+                SizedBox(width: AppSize.BOX_SIZE_WIDTH_M),
+                Text(
+                  t.loginGet['profile']['nickname'],
+                  style: TextStyle(
+                      color: Color(AppColors.FONT_EM_COLOR),
+                      fontSize: AppSize.FONT_SIZE,
+                      fontWeight: FontWeight.w500,
+                      height: 1),
+                ),
+                Expanded(
+                  child: Text('当前等级: ', textAlign: TextAlign.right),
+                ),
+                Text(
+                  'lv.$level',
+                  style: TextStyle(
+                    color: Color(Provider.of<ThemeModel>(context, listen: true)
+                        .getColor),
+                    fontSize: AppSize.FONT_SIZE,
+                  ),
+                )
+              ],
             ),
-            SizedBox(width: AppSize.BOX_SIZE_WIDTH_M),
-            const Text(
-              '立即登录',
-              style: TextStyle(
-                color: Color(AppColors.FONT_EM_COLOR),
-                fontSize: AppSize.FONT_SIZE,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const Icon(
-              Icons.arrow_forward,
-              size: 20,
-            )
-          ],
-        ),
+          );
+        },
       ),
-    ),
-  );
+    );
+  }
 }
 
 // ignore: must_be_immutable
@@ -135,16 +163,18 @@ class IconWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          icon,
-          color: Color(Provider.of<ThemeModel>(context, listen: true).getColor),
-        ),
-        SizedBox(
+        Consumer<ThemeModel>(builder: (context, t, child) {
+          return Icon(
+            icon,
+            color: Color(t.getColor),
+          );
+        }),
+        const SizedBox(
           height: AppSize.BOX_SIZE_HEIGHT_S,
         ),
         Text(
           text,
-          style: TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
+          style: const TextStyle(color: Color(AppColors.FONT_MAIN_COLOR)),
         ),
       ],
     );

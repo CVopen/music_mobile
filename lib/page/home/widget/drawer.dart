@@ -105,6 +105,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     onPressed: () {
                       Provider.of<LoginInfo>(context, listen: false).loginSet =
                           'remove';
+                      Provider.of<ThemeModel>(context, listen: false).setColor =
+                          AppColors.IMPORTANT_COLOR;
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         '/',
