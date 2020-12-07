@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:music_mobile/api/login_page.dart';
 import 'package:music_mobile/common/variable.dart';
 import 'package:music_mobile/page/home/widget/circle_logo.dart';
 import 'package:music_mobile/store/login_info.dart';
 import 'package:music_mobile/store/theme_model.dart';
+import 'package:music_mobile/widget/show_dialog.dart';
 import 'package:provider/provider.dart';
 
 // drawer 抽屉控制
@@ -34,6 +36,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             .add(ThemeSelect(color: element['color'], name: element['name']));
       });
     });
+  }
+
+  _logout() {
+    dialogWidget(
+      context,
+      Text('是否退出当前帐号'),
+      () {
+        ApiLogin().logout();
+        Provider.of<LoginInfo>(context, listen: false).loginSet = 'remove';
+        Provider.of<ThemeModel>(context, listen: false).setColor =
+            AppColors.IMPORTANT_COLOR;
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          '/',
+          (Route<dynamic> route) => false,
+        );
+      },
+    );
   }
 
   @override
@@ -102,17 +122,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     child: const Text('退出登录'),
                     minWidth: 80,
                     height: 30,
-                    onPressed: () {
-                      Provider.of<LoginInfo>(context, listen: false).loginSet =
-                          'remove';
-                      Provider.of<ThemeModel>(context, listen: false).setColor =
-                          AppColors.IMPORTANT_COLOR;
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        '/',
-                        (Route<dynamic> route) => false,
-                      );
-                    },
+                    onPressed: this._logout,
                   )
                 ],
               ),

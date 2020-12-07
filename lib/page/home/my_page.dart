@@ -19,11 +19,15 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
   int _level;
+  Map _likeMusic = {};
+  List _createList = [];
+  List _collectList = [];
 
   @override
   void initState() {
     super.initState();
     this._getLevel();
+    this._getUserBind();
   }
 
   _getLevel() {
@@ -31,6 +35,28 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
       setState(() {
         _level = res.data['data']['level'];
       });
+    });
+  }
+
+  _getUserBind() async {
+    Map _info = Provider.of<LoginInfo>(context, listen: false).loginGet;
+    print(_info['account']['id']);
+
+    var res = await ApiHome().getPlaylist({'uid': _info['account']['id']});
+    List _create = [];
+    List _collect = [];
+    setState(() {
+      _likeMusic = res.data['playlist'][0];
+      res.data['playlist'].remove(res.data['playlist'][0]);
+      res.data['playlist'].forEach((item) {
+        if (item['creator']['userId'] == _info['account']['id']) {
+          _create.add(item);
+        } else {
+          _collect.add(item);
+        }
+      });
+      _createList.addAll(_create);
+      _collectList.addAll(_collect);
     });
   }
 
@@ -42,14 +68,16 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
       children: [
         AvatarToLogin(level: _level),
         GridIconWidget(),
-        LikeMusic(),
-        const SetSongList(
+        LikeMusic(likeMusic: _likeMusic),
+        SetSongList(
           title: '创建歌单',
           total: '暂无创建的歌单',
+          data: _createList,
         ),
-        const SetSongList(
+        SetSongList(
           title: '收藏歌单',
           total: '暂无收藏的歌单',
+          data: _collectList,
         ),
       ],
     );
@@ -59,7 +87,7 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
 class AvatarToLogin extends StatelessWidget {
   final int level;
 
-  const AvatarToLogin({Key key, this.level}) : super(key: key);
+  const AvatarToLogin({Key key, this.level = 0}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,7 +95,7 @@ class AvatarToLogin extends StatelessWidget {
       child: Consumer<LoginInfo>(
         builder: (context, t, child) {
           return Container(
-            color: Color(AppColors.APP_THEME),
+            color: const Color(AppColors.APP_THEME),
             child: Row(
               children: [
                 CircleLogo(
@@ -78,12 +106,13 @@ class AvatarToLogin extends StatelessWidget {
                 Text(
                   t.loginGet['profile']['nickname'],
                   style: TextStyle(
-                      color: Color(AppColors.FONT_EM_COLOR),
-                      fontSize: AppSize.FONT_SIZE,
-                      fontWeight: FontWeight.w500,
-                      height: 1),
+                    color: Color(AppColors.FONT_EM_COLOR),
+                    fontSize: AppSize.FONT_SIZE,
+                    fontWeight: FontWeight.w500,
+                    height: 1,
+                  ),
                 ),
-                Expanded(
+                const Expanded(
                   child: Text('当前等级: ', textAlign: TextAlign.right),
                 ),
                 Text(

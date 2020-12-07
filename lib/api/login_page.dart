@@ -1,7 +1,6 @@
 import 'package:music_mobile/utils/request.dart';
 
 // 使用单例
-// 不使用单例模式也可以在api.dart 统一存放到map中
 class ApiLogin {
   factory ApiLogin() => _getInstance();
   static ApiLogin _instance;
@@ -34,7 +33,9 @@ class ApiLogin {
 
   // 验证验证码
   verify(data) {
-    print(data);
     return _request.get('/captcha/verify', data: data);
   }
+
+  // 退出登录
+  logout() => _request.get('/logout');
 }

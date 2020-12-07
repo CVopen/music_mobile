@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:music_mobile/common/variable.dart';
 import 'image_radius.dart';
 
-class MusicItemListView extends StatefulWidget {
+class MusicItemListView extends StatelessWidget {
   final Map item;
 
   const MusicItemListView({Key key, this.item}) : super(key: key);
-  @override
-  _MusicItemListViewState createState() => _MusicItemListViewState();
-}
-
-class _MusicItemListViewState extends State<MusicItemListView> {
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
@@ -21,7 +16,7 @@ class _MusicItemListViewState extends State<MusicItemListView> {
       child: Row(
         children: [
           Container(
-            child: ImageRadius(widget.item['picUrl'], 80.0, 80.0),
+            child: ImageRadius(item['picUrl'], 80.0, 80.0),
           ),
           const SizedBox(
             width: AppSize.BOX_SIZE_WIDTH_M,
@@ -54,14 +49,14 @@ class _MusicItemListViewState extends State<MusicItemListView> {
                       child: Row(
                         children: [
                           Text(
-                            widget.item['company'],
+                            item['company'],
                             style: const TextStyle(
                               color: Color(AppColors.FONT_EM_COLOR),
                               fontSize: AppSize.FONT_SIZE_M,
                             ),
                           ),
                           Text(
-                            ' - ${widget.item['artist']['name']}',
+                            ' - ${item['artist']['name']}',
                             style: const TextStyle(
                               color: Color(AppColors.FONT_COLOR),
                               fontSize: AppSize.FONT_SIZE_S,
@@ -74,7 +69,7 @@ class _MusicItemListViewState extends State<MusicItemListView> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      widget.item['name'],
+                      item['name'],
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

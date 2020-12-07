@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   _getColor() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    ;
+
     // ignore: await_only_futures
     int color = await prefs.getInt('color');
     if (color == null) {

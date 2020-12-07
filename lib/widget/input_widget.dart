@@ -3,26 +3,38 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:music_mobile/common/variable.dart';
+import 'package:music_mobile/store/theme_model.dart';
 import 'dart:ui';
+
+import 'package:provider/provider.dart';
 
 class InputWidget extends StatefulWidget {
   final ValueChanged callback;
   final IconData prefixIcon;
+  // 右边icon
   final IconData icon;
+  // 左边icon
   final String placeholder;
+  // 提示文字
   final bool isShow;
+  // 是否需要查看密码
   final String code;
+  // 验证码按钮文字
   final ValueChanged codeFun;
+  // 验证码回调函数
+  final String type;
 
-  const InputWidget(this.callback,
-      {Key key,
-      this.prefixIcon,
-      this.icon,
-      this.placeholder,
-      this.isShow,
-      this.code,
-      this.codeFun})
-      : super(key: key);
+  const InputWidget(
+    this.callback, {
+    Key key,
+    this.prefixIcon,
+    this.icon,
+    this.placeholder,
+    this.isShow,
+    this.code,
+    this.codeFun,
+    this.type,
+  }) : super(key: key);
   @override
   _InputWidgetState createState() => _InputWidgetState();
 }
@@ -94,29 +106,36 @@ class _InputWidgetState extends State<InputWidget> {
         color: Colors.transparent,
         child: TextField(
           focusNode: textFieldFocusNode,
-          inputFormatters: [
-            //只允许输入字母数字 @ .
-            // ignore: deprecated_member_use
-            WhitelistingTextInputFormatter(RegExp("[0-9.]|[a-zA-Z]|[@]|[\.]")),
-          ],
+          inputFormatters: widget.type == null
+              ? [
+                  //只允许输入字母数字 @ .
+                  // ignore: deprecated_member_use
+                  WhitelistingTextInputFormatter(
+                      RegExp("[0-9.]|[a-zA-Z]|[@]|[\.]")),
+                ]
+              : null,
           onChanged: widget.callback,
           obscureText: (_isShow is bool) ? _isShow : false,
-          cursorColor: const Color(AppColors.IMPORTANT_COLOR),
+          cursorColor:
+              Color(Provider.of<ThemeModel>(context, listen: true).getColor),
           decoration: InputDecoration(
             hintText: widget.placeholder,
-            prefixIcon: Icon(
-              widget.prefixIcon,
-              color: const Color(AppColors.FONT_COLOR),
-            ),
+            prefixIcon: widget.prefixIcon == null
+                ? null
+                : Icon(
+                    widget.prefixIcon,
+                    color: const Color(AppColors.FONT_COLOR),
+                  ),
             icon: widget.icon != null
                 ? Icon(
                     widget.icon,
                     color: const Color(AppColors.FONT_COLOR),
                   )
                 : null,
-            focusedBorder: const UnderlineInputBorder(
+            focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: Color(AppColors.IMPORTANT_COLOR),
+                color: Color(
+                    Provider.of<ThemeModel>(context, listen: true).getColor),
                 width: 0.5,
               ),
             ),

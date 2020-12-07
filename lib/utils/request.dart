@@ -16,7 +16,7 @@ class Request {
 
   Request._init() {
     _dio = Dio(BaseOptions(
-      baseUrl: 'http://192.168.1.106:3000/',
+      baseUrl: 'http://192.168.1.110:3000/',
       // baseUrl: 'http://192.168.1.8:3000/',
       connectTimeout: 5000,
       receiveTimeout: 5000,
@@ -27,14 +27,14 @@ class Request {
         onRequest: (RequestOptions options) async {
           // 在请求被发送之前做一些事情
           // _dio.lock();
-
+          var now = new DateTime.now();
           SharedPreferences prefs = await SharedPreferences.getInstance();
           String info = prefs.getString('userInfo');
           if (info != null) {
             options.queryParameters['cookie'] =
                 convert.jsonDecode(info)['cookie'];
           }
-
+          options.queryParameters['time'] = now.millisecondsSinceEpoch;
           // _dio.unlock();
           return options; //continue
           // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`对象或返回`dio.resolve(data)`。

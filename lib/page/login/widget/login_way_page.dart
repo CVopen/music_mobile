@@ -123,13 +123,26 @@ class _LoginWayPageState extends State<LoginWayPage> {
     switch (widget.count) {
       case 0:
         res = await ApiLogin().loginPhone(_login);
-        Provider.of<LoginInfo>(context, listen: false).loginSet = res.data;
+        if (res.data['code'] == 200) {
+          Provider.of<LoginInfo>(context, listen: false).loginSet = res.data;
 
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          '/home_page',
-          (route) => false,
-        );
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/home_page',
+            (route) => false,
+          );
+        } else {
+          Fluttertoast.showToast(
+            msg: "密码错误",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black87,
+            textColor: Colors.white,
+            fontSize: 14.0,
+          );
+        }
+
         break;
       case 1:
         Fluttertoast.showToast(
@@ -257,7 +270,7 @@ class _LoginWayPageState extends State<LoginWayPage> {
             height: 50,
           ),
           MaterialButton(
-            color: const Color(AppColors.IMPORTANT_COLOR),
+            color: Colors.pink[400],
             shape: const RoundedRectangleBorder(
               side: BorderSide.none,
               borderRadius: BorderRadius.all(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music_mobile/api/home_page.dart';
 import 'package:music_mobile/store/login_info.dart';
 import 'package:music_mobile/store/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -72,7 +73,8 @@ class _HomePageState extends State<HomePage>
     });
     _currentIndex = 1;
     _controller = PageController(initialPage: 1);
-    _createBottom();
+    this._createBottom();
+    // this._refresh();
   }
 
   _createBottom() {
@@ -87,6 +89,13 @@ class _HomePageState extends State<HomePage>
           ),
         );
       });
+    });
+  }
+
+  // ignore: unused_element
+  _refresh() {
+    ApiHome().refreshLogin().then((res) {
+      print(res);
     });
   }
 

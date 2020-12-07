@@ -16,12 +16,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   int _count = 0;
   List<Color> _colors = [
-    Color(0xff5eb680),
-    Color(0xff10a996),
-    Color(0xff1eacb6),
     Color(0xff5340a7),
-    Color(0xff223590),
-    Color(0xff5e0680),
+    Color(0xfffa7298),
+    Color(0xfff34235),
+    Color(0xfffdc106),
+    Color(0xff8ac249),
+    Color(0xff2bcbba),
   ];
 
   @override

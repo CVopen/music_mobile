@@ -3,7 +3,7 @@ import '../../../../common/variable.dart';
 
 // 底部弹出框
 // ignore: missing_return
-Function myShowModalBottomSheet(context, double height, count) {
+Function myShowModalBottomSheet(context, double height, count, callback) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -20,7 +20,7 @@ Function myShowModalBottomSheet(context, double height, count) {
             Container(
               padding: const EdgeInsets.all(AppSize.PADDING_SIZE_B),
               child: Text(
-                '歌单$count',
+                '歌单$count首',
                 style: const TextStyle(
                   color: Color(AppColors.FONT_COLOR),
                 ),
@@ -38,7 +38,28 @@ Function myShowModalBottomSheet(context, double height, count) {
             ),
             InkWell(
               onTap: () {
-                print('我是去登录');
+                return showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Text('确认删除'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('取消'),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        FlatButton(
+                          child: Text('确认'),
+                          onPressed: () {
+                            callback();
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
               child: Container(
                 padding: const EdgeInsets.only(

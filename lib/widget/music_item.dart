@@ -3,16 +3,10 @@ import 'package:music_mobile/common/variable.dart';
 
 import 'image_radius.dart';
 
-class MusicItem extends StatefulWidget {
+class MusicItem extends StatelessWidget {
   final Map item;
 
   const MusicItem({Key key, this.item}) : super(key: key);
-
-  @override
-  _MusicItemState createState() => _MusicItemState();
-}
-
-class _MusicItemState extends State<MusicItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +15,7 @@ class _MusicItemState extends State<MusicItem> {
       child: Stack(
         children: [
           Container(
-            child: ImageRadius(widget.item['picUrl'], 120.0, 120.0),
+            child: ImageRadius(item['picUrl'], 120.0, 120.0),
           ),
           Positioned(
             top: 0,
@@ -34,7 +28,7 @@ class _MusicItemState extends State<MusicItem> {
                   size: AppSize.ICON_SIZE,
                 ),
                 Text(
-                  '${widget.item['playCount']}',
+                  '${item['playCount']}',
                   style: const TextStyle(
                     color: Color(AppColors.BACKGROUND_COLOR),
                     fontSize: AppSize.FONT_SIZE_S,
