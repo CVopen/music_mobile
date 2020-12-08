@@ -1,5 +1,5 @@
 import 'package:music_mobile/utils/request.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 // 使用单例
 // 不使用单例模式也可以在api.dart 统一存放到map中

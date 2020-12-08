@@ -16,10 +16,10 @@ class Request {
 
   Request._init() {
     _dio = Dio(BaseOptions(
-      baseUrl: 'http://192.168.1.110:3000/',
-      // baseUrl: 'http://192.168.1.8:3000/',
-      connectTimeout: 5000,
-      receiveTimeout: 5000,
+      // baseUrl: 'http://192.168.1.110:3000/',
+      baseUrl: 'http://192.168.1.8:3000/',
+      connectTimeout: 6000,
+      receiveTimeout: 6000,
     ));
     // 拦截器
     _dio.interceptors.add(

@@ -16,9 +16,6 @@ import 'widget/title_widget.dart';
 import 'widget/circle_logo.dart';
 import 'widget/drawer.dart';
 
-// import '../../api/home_page.dart';
-// import '../../api/api.dart';
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();

@@ -3,7 +3,7 @@ import '../../../../common/variable.dart';
 
 // 底部弹出框
 // ignore: missing_return
-Function myShowModalBottomSheet(context, double height, count, callback) {
+Function myShowModalBottomSheet(context, double height, count, callback, id) {
   showModalBottomSheet(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -51,7 +51,7 @@ Function myShowModalBottomSheet(context, double height, count, callback) {
                         FlatButton(
                           child: Text('确认'),
                           onPressed: () {
-                            callback();
+                            callback(id);
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
                           },
@@ -62,11 +62,8 @@ Function myShowModalBottomSheet(context, double height, count, callback) {
                 );
               },
               child: Container(
-                padding: const EdgeInsets.only(
-                  top: AppSize.PADDING_SIZE_S,
-                  bottom: AppSize.PADDING_SIZE_S,
-                  left: AppSize.PADDING_SIZE,
-                ),
+                padding: const EdgeInsets.fromLTRB(AppSize.PADDING_SIZE,
+                    AppSize.PADDING_SIZE_S, 0, AppSize.PADDING_SIZE_S),
                 decoration: const BoxDecoration(
                   border: Border(
                     bottom: BorderSide(

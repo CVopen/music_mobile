@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:music_mobile/page/audio/audio_widget.dart';
 
 import 'common/variable.dart' show AppColors;
 
 import 'router/routes.dart';
-
-import 'page/splash_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:music_mobile/store/provider_steup.dart';
@@ -16,7 +15,21 @@ import 'package:music_mobile/store/provider_steup.dart';
 void main() {
   runApp(MultiProvider(
     providers: providers,
-    child: MyApp(),
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Container(
+        child: Stack(
+          children: [
+            MyApp(),
+            Positioned(
+              bottom: 0,
+              left: 50,
+              child: MusicWidget(),
+            ),
+          ],
+        ),
+      ),
+    ),
   ));
 
   if (Platform.isAndroid) {
@@ -49,10 +62,11 @@ class MyApp extends StatelessWidget {
         // splashColor: Color.fromRGBO(0, 0, 0, 0),
         // highlightColor: Color.fromRGBO(0, 0, 0, 0),
       ),
-      home: SplashScreen(),
+      // home: SplashScreen(),
+      // home: Container(width: 50, height: 50, color: Colors.yellow),
       // routes: routes,
       onGenerateRoute: onGenerateRoutePage,
-      // initialRoute: '/home_page',
+      // initialRoute: '/',
     );
   }
 }

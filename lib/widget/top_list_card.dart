@@ -56,11 +56,8 @@ class MusicItemListView extends StatelessWidget {
     final _size = MediaQuery.of(context).size;
     final _width = _size.width;
     return Container(
-      margin: const EdgeInsets.only(
-        bottom: AppSize.PADDING_SIZE_B,
-        left: AppSize.PADDING_SIZE_B,
-        right: AppSize.PADDING_SIZE_B,
-      ),
+      margin: const EdgeInsets.fromLTRB(AppSize.PADDING_SIZE_B, 0,
+          AppSize.PADDING_SIZE_B, AppSize.PADDING_SIZE_B),
       height: 80,
       width: _width,
       child: Row(

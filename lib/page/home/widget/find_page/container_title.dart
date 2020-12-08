@@ -53,12 +53,7 @@ class _ContainerTitleState extends State<ContainerTitle> {
                   print('查看更多');
                 },
                 child: Container(
-                  padding: const EdgeInsets.only(
-                    top: 2,
-                    left: 5,
-                    right: 5,
-                    bottom: 2,
-                  ),
+                  padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(AppSize.BORDER_RADIUS),

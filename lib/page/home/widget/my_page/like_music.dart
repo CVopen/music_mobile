@@ -11,11 +11,8 @@ class LikeMusic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        top: AppSize.PADDING_SIZE,
-        left: AppSize.PADDING_SIZE,
-        right: AppSize.PADDING_SIZE,
-      ),
+      margin: const EdgeInsets.fromLTRB(
+          AppSize.PADDING_SIZE, AppSize.PADDING_SIZE, AppSize.PADDING_SIZE, 0),
       padding: const EdgeInsets.all(AppSize.PADDING_SIZE_B),
       decoration: const BoxDecoration(
         color: Color(AppColors.BACKGROUND_COLOR),

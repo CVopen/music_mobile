@@ -8,7 +8,7 @@ Function onGenerateRoutePage = (RouteSettings settings) {
   final Function _builder = routes[name];
 
   Route route;
-  print(settings);
+  print(settings.name);
   if (settings.arguments != null) {
     route = CustomRoute(_builder, arguments: settings.arguments);
   } else {
@@ -17,3 +17,5 @@ Function onGenerateRoutePage = (RouteSettings settings) {
 
   return route;
 };
+
+// builderAudio() {}

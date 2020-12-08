@@ -35,7 +35,7 @@ class _NewPageState extends State<NewPage> {
               // Navigator.push(context, MaterialPageRoute(builder: (context) {
               //   return NewPage();
               // }));
-              Navigator.of(context).pushNamed("/home");
+              Navigator.of(context).pushNamed("/home_page");
             },
           ),
         ],

@@ -21,12 +21,7 @@ class _RecommendMusicState extends State<RecommendMusic> {
         itemBuilder: (context, index) {
           if (index == widget.personalizedList.length - 1) {
             return Container(
-              margin: EdgeInsets.only(
-                top: AppSize.PADDING_SIZE_B,
-                left: AppSize.PADDING_SIZE_B,
-                right: AppSize.PADDING_SIZE_B,
-                bottom: AppSize.PADDING_SIZE_B,
-              ),
+              margin: EdgeInsets.all(AppSize.PADDING_SIZE_B),
               width: 120,
               height: 140,
               child: Column(
@@ -43,11 +38,8 @@ class _RecommendMusicState extends State<RecommendMusic> {
             );
           }
           return Container(
-            margin: const EdgeInsets.only(
-              top: AppSize.PADDING_SIZE_B,
-              left: AppSize.PADDING_SIZE_B,
-              bottom: AppSize.PADDING_SIZE_B,
-            ),
+            margin: const EdgeInsets.fromLTRB(AppSize.PADDING_SIZE_B,
+                AppSize.PADDING_SIZE_B, 0, AppSize.PADDING_SIZE_B),
             width: 120,
             height: 140,
             child: Column(

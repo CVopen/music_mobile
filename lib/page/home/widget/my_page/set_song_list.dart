@@ -76,7 +76,6 @@ class _SetSongListState extends State<SetSongList> {
     Map _info = Provider.of<LoginInfo>(context, listen: false).loginGet;
 
     var res = await ApiHome().getPlaylist({'uid': _info['account']['id']});
-    print('刷新了');
     List<Widget> _items = [];
     setState(() {
       res.data['playlist'].remove(res.data['playlist'][0]);
@@ -86,12 +85,18 @@ class _SetSongListState extends State<SetSongList> {
           if (item['creator']['userId'] == _info['account']['id']) {
             _items.add(SongItem(
               item: item,
+              callback: (i) {
+                this._getUserBind();
+              },
             ));
           }
         } else {
           if (item['creator']['userId'] != _info['account']['id']) {
             _items.add(SongItem(
               item: item,
+              callback: (i) {
+                this._getUserBind();
+              },
             ));
           }
         }
@@ -103,11 +108,8 @@ class _SetSongListState extends State<SetSongList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        left: AppSize.PADDING_SIZE,
-        right: AppSize.PADDING_SIZE,
-        top: AppSize.PADDING_SIZE,
-      ),
+      margin: EdgeInsets.fromLTRB(
+          AppSize.PADDING_SIZE, AppSize.PADDING_SIZE, AppSize.PADDING_SIZE, 0),
       padding: EdgeInsets.all(AppSize.PADDING_SIZE_B),
       decoration: BoxDecoration(
         color: Color(AppColors.BACKGROUND_COLOR),
@@ -168,9 +170,9 @@ class SongItem extends StatelessWidget {
   final ValueChanged callback;
   const SongItem({Key key, this.item, this.callback}) : super(key: key);
 
-  _delMusicList(id, call) {
+  _delMusicList(id) {
     ApiHome().deletePalyList({'id': id}).then((res) {
-      if (res.data['code'] == 200) call('');
+      if (res.data['code'] == 200) callback('');
     });
   }
 
@@ -221,7 +223,7 @@ class SongItem extends StatelessWidget {
                 ),
                 onPressed: () {
                   myShowModalBottomSheet(context, 100.0, item['trackCount'],
-                      _delMusicList(item['id'], callback));
+                      _delMusicList, item['id']);
                 },
               )
             ],
