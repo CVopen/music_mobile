@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
-// import '../../api/home_page.dart';
+import 'package:music_mobile/common/variable.dart';
+import 'package:music_mobile/page/home/widget/video_Item_widget.dart';
+import 'package:music_mobile/store/theme_model.dart';
+import 'package:music_mobile/widget/tabbar_widget.dart';
+import 'package:provider/provider.dart';
 
 class MvPage extends StatefulWidget {
   @override
@@ -8,7 +11,10 @@ class MvPage extends StatefulWidget {
 }
 
 class _MvPageState extends State<MvPage> with AutomaticKeepAliveClientMixin {
-  int a = 0;
+  List _list = ['推荐', '全部', '内地', '港台', '欧美', '日本', '韩国', '网易出品'];
+  Map _size = {};
+  PageController _controller;
+  int _currentIndex;
 
   @override
   bool get wantKeepAlive => true;
@@ -16,48 +22,107 @@ class _MvPageState extends State<MvPage> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-    // var swiper = ApiHome().getBanner();
-    // print(swiper);
+    _currentIndex = 0;
+    _controller = PageController(initialPage: 0);
   }
 
+  _calcSize(widthAll) {
+    double _widthMax = widthAll / 2;
+    double _heightImg = _widthMax / 0.7 - 60 - 16;
+    double _widthImg = _heightImg / 1.2;
+    double _paddingLeft = (_widthMax - _widthImg) / 3 * 2;
+    double _paddingRight = (_widthMax - _widthImg) / 3;
+    setState(() {
+      _size['width'] = _widthImg;
+      _size['heigth'] = _heightImg;
+      _size['paddingMax'] = _paddingLeft;
+      _size['paddingSmall'] = _paddingRight;
+    });
+  }
+
+  // ignore: must_call_super
   Widget build(BuildContext context) {
-    super.build(context);
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          Text("a$a"),
-          RaisedButton(
-            child: Text("点击"),
-            onPressed: () {
-              a++;
-              setState(() {});
+    if (_size.isEmpty) {
+      this._calcSize(MediaQuery.of(context).size.width);
+    }
+    return Column(
+      children: [
+        Consumer<ThemeModel>(builder: (context, t, child) {
+          return TabbarWidget(
+            color: t.getColor,
+            title: _list,
+            index: _currentIndex,
+            callback: (value) {
+              _controller.jumpToPage(value);
+            },
+          );
+        }),
+        SizedBox(height: AppSize.BOX_SIZE_WIDTH_S),
+        Expanded(
+          child: PageView.builder(
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(
+                  top: AppSize.PADDING_SIZE_S,
+                  bottom: AppSize.PADDING_SIZE_S,
+                ),
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.7,
+                  ),
+                  children: [
+                    VideoItemWidget(
+                      width: _size['width'],
+                      heigth: _size['heigth'],
+                      paddingMax: _size['paddingMax'],
+                      paddingSmall: _size['paddingSmall'],
+                    ),
+                    VideoItemWidget(
+                      width: _size['width'],
+                      heigth: _size['heigth'],
+                      paddingMax: _size['paddingSmall'],
+                      paddingSmall: _size['paddingMax'],
+                    ),
+                    VideoItemWidget(
+                      width: _size['width'],
+                      heigth: _size['heigth'],
+                      paddingMax: _size['paddingMax'],
+                      paddingSmall: _size['paddingSmall'],
+                    ),
+                    VideoItemWidget(
+                      width: _size['width'],
+                      heigth: _size['heigth'],
+                      paddingMax: _size['paddingSmall'],
+                      paddingSmall: _size['paddingMax'],
+                    ),
+                    VideoItemWidget(
+                      width: _size['width'],
+                      heigth: _size['heigth'],
+                      paddingMax: _size['paddingMax'],
+                      paddingSmall: _size['paddingSmall'],
+                    ),
+                    VideoItemWidget(
+                      type: 'mv',
+                      width: _size['width'],
+                      heigth: _size['heigth'],
+                      paddingMax: _size['paddingSmall'],
+                      paddingSmall: _size['paddingMax'],
+                    ),
+                  ],
+                ),
+              );
+            },
+            itemCount: _list.length,
+            controller: _controller,
+            onPageChanged: (int index) {
+              setState(() {
+                if (_currentIndex != index) _currentIndex = index;
+              });
             },
           ),
-          SizedBox(
-            height: 40,
-          ),
-          RaisedButton(
-            child: Text("跳转"),
-            onPressed: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   return NewPage();
-              // }));
-              Navigator.of(context)
-                  .pushNamed("/new_page", arguments: {'name': "hi"});
-            },
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

@@ -5,14 +5,34 @@ class ImageRadius extends StatelessWidget {
   final double width;
   final double height;
   final double radius;
+  final double topLeft;
+  final double topRight;
+  final double bottomLeft;
+  final double bottomRight;
 
-  const ImageRadius(this.url, this.width, this.height,
-      {Key key, this.radius = 10})
-      : super(key: key);
+  const ImageRadius(
+    this.url,
+    this.width,
+    this.height, {
+    Key key,
+    this.radius = 10,
+    this.topLeft = 0,
+    this.topRight = 0,
+    this.bottomLeft = 0,
+    this.bottomRight = 0,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
+      borderRadius:
+          topLeft > 0 || topRight > 0 || topRight > 0 || bottomRight > 0
+              ? BorderRadius.only(
+                  topLeft: Radius.circular(topLeft),
+                  topRight: Radius.circular(topRight),
+                  bottomLeft: Radius.circular(bottomLeft),
+                  bottomRight: Radius.circular(bottomRight),
+                )
+              : BorderRadius.circular(radius),
       child: FadeInImage.assetNetwork(
         width: width,
         height: height,

@@ -68,8 +68,8 @@ class _HomePageState extends State<HomePage>
         VideoPage(),
       ];
     });
-    _currentIndex = 1;
-    _controller = PageController(initialPage: 1);
+    _currentIndex = 2;
+    _controller = PageController(initialPage: 2);
     this._createBottom();
     // this._refresh();
   }
@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage>
   // 使用PageView 做页面状态保持
   Widget _buildBodyWidget() {
     return PageView.builder(
-      // physics: NeverScrollableScrollPhysics(), // 禁止页面左右滑动
+      physics: NeverScrollableScrollPhysics(), // 禁止页面左右滑动
       controller: _controller,
       onPageChanged: (int index) {
         setState(() {

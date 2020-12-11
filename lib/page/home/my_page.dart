@@ -18,7 +18,7 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-  int _level;
+  int _level = 0;
   Map _likeMusic = {};
   List _createList = [];
   List _collectList = [];
@@ -33,7 +33,9 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   _getLevel() {
     ApiHome().getLevel().then((res) {
       setState(() {
-        _level = res.data['data']['level'];
+        if (res != null) {
+          _level = res.data['data']['level'];
+        }
       });
     });
   }
