@@ -104,7 +104,7 @@ class _TabbarWidgetState extends State<TabbarWidget>
       });
     }
 
-    if (widget.index > _count) {
+    if ((widget.index - _count) == 1) {
       // 当向右滑动时
       // 当前widget应在位置减去视口位置 = 滑动量
       if (widget.index * _itemWidth > box.size.width / 2) {
@@ -114,18 +114,15 @@ class _TabbarWidgetState extends State<TabbarWidget>
           curve: Curves.ease,
         );
       }
-    } else {
+    } else if ((widget.index - _count) == -1) {
       // 左滑
-      // 当前widget应在lv中位置减去 lv的一半等于滑动量
-      if ((box.size.width + _controllerScorll.position.maxScrollExtent) / 2 >
-          widget.index * _itemWidth) {
-        _controllerScorll.animateTo(
-          widget.index * _itemWidth -
-              (box.size.width + _controllerScorll.position.maxScrollExtent) / 2,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.ease,
-        );
-      }
+      // 滚动位置减去一个itemwidth
+
+      _controllerScorll.animateTo(
+        _controllerScorll.offset - _itemWidth,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
     }
   }
 
