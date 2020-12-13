@@ -1,37 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:music_mobile/api/home_page.dart';
+
+import 'package:music_mobile/utils/format.dart';
 import 'package:music_mobile/widget/image_radius.dart';
 
-import 'mv_page/mv_back_filter.dart';
+import 'mv_back_filter.dart';
 
-class VideoItemWidget extends StatelessWidget {
+class VideoItemWidget extends StatefulWidget {
   final String type;
   final double width;
   final double heigth;
-  final double paddingMax;
-  final double paddingSmall;
+  final double paddingLeft;
+  final double paddingRight;
+  final Map data;
 
   const VideoItemWidget({
     Key key,
     this.type,
     @required this.width,
     @required this.heigth,
-    @required this.paddingMax,
-    @required this.paddingSmall,
+    @required this.paddingLeft,
+    @required this.paddingRight,
+    @required this.data,
   }) : super(key: key);
+  @override
+  _VideoItemWidgetState createState() => _VideoItemWidgetState();
+}
+
+class _VideoItemWidgetState extends State<VideoItemWidget> {
+  List _list = [];
+  String _like = '';
+  @override
+  void initState() {
+    super.initState();
+    if (widget.type != null) {
+      setState(() {
+        _list = backFilter(
+          widget.width,
+          widget.data['cover'] == null
+              ? widget.data['picUrl']
+              : widget.data['cover'],
+        );
+        this._getMvInfo();
+      });
+    }
+  }
+
+  _getMvInfo() {
+    ApiHome().getDetail({'mvid': widget.data['id']}).then((res) {
+      setState(() {
+        _like = computePlay(res.data['likedCount']);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var _list = [];
-    if (type != null) {
-      _list = backFilter(
-        width,
-        'https://p1.music.126.net/rNohKmVCeTlCdQ89R3N9AQ==/109951165465159841.jpg',
-      );
-    }
     return Container(
       padding: EdgeInsets.only(
-        left: paddingMax,
-        right: paddingSmall,
+        left: widget.paddingLeft,
+        right: widget.paddingRight,
+        top: 8,
+        bottom: 8,
       ),
       child: InkWell(
         onTap: () {
@@ -43,9 +73,11 @@ class VideoItemWidget extends StatelessWidget {
               children: [
                 Container(
                   child: ImageRadius(
-                    'https://p1.music.126.net/rNohKmVCeTlCdQ89R3N9AQ==/109951165465159841.jpg',
-                    width,
-                    heigth,
+                    widget.data['cover'] == null
+                        ? widget.data['picUrl']
+                        : widget.data['cover'],
+                    widget.width,
+                    widget.heigth,
                     topLeft: 10,
                     topRight: 10,
                   ),
@@ -55,7 +87,7 @@ class VideoItemWidget extends StatelessWidget {
                   bottom: 10,
                   left: 0,
                   child: Container(
-                    width: width - 10,
+                    width: widget.width - 10,
                     margin: const EdgeInsets.only(left: 5, right: 5),
                     child: Row(
                       children: [
@@ -65,7 +97,9 @@ class VideoItemWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: ImageRadius(
-                            'https://p1.music.126.net/rNohKmVCeTlCdQ89R3N9AQ==/109951165465159841.jpg',
+                            widget.data['cover'] == null
+                                ? widget.data['picUrl']
+                                : widget.data['cover'],
                             20,
                             20,
                             radius: 20,
@@ -76,7 +110,7 @@ class VideoItemWidget extends StatelessWidget {
                           alignment: Alignment.bottomCenter,
                           height: 24,
                           child: Text(
-                            '01:47',
+                            formatDuration(widget.data['duration']),
                             style: const TextStyle(
                               color: Color.fromRGBO(255, 255, 255, .5),
                               fontSize: 12.0,
@@ -91,7 +125,7 @@ class VideoItemWidget extends StatelessWidget {
             ),
             // 底部名称信息
             Container(
-              width: width,
+              width: widget.width,
               height: 60,
               padding: const EdgeInsets.all(5),
               decoration: const BoxDecoration(
@@ -105,7 +139,7 @@ class VideoItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata',
+                    widget.data['name'],
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: const TextStyle(height: 1, fontSize: 14),
@@ -119,7 +153,7 @@ class VideoItemWidget extends StatelessWidget {
                         size: 16,
                       ),
                       Text(
-                        '46.5万',
+                        computePlay(widget.data['playCount']),
                         style: const TextStyle(
                             height: 1, fontSize: 12, color: Colors.black54),
                       ),
@@ -131,7 +165,7 @@ class VideoItemWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 3),
                       Text(
-                        '46.5万',
+                        _like,
                         style: const TextStyle(
                             height: 1, fontSize: 12, color: Colors.black54),
                       ),

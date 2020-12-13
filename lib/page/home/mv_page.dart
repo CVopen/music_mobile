@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_mobile/common/variable.dart';
-import 'package:music_mobile/page/home/widget/video_Item_widget.dart';
+import 'package:music_mobile/page/home/widget/v_page/item_page.dart';
+
 import 'package:music_mobile/store/theme_model.dart';
 import 'package:music_mobile/widget/tabbar_widget.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ class MvPage extends StatefulWidget {
 }
 
 class _MvPageState extends State<MvPage> with AutomaticKeepAliveClientMixin {
-  List _list = ['推荐', '全部', '内地', '港台', '欧美', '日本', '韩国', '网易出品'];
+  List _list = ['推荐', '最新', '全部', '内地', '港台', '欧美', '日本', '韩国', '网易出品'];
   Map _size = {};
   PageController _controller;
   int _currentIndex;
@@ -61,57 +62,7 @@ class _MvPageState extends State<MvPage> with AutomaticKeepAliveClientMixin {
         Expanded(
           child: PageView.builder(
             itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.only(
-                  top: AppSize.PADDING_SIZE_S,
-                  bottom: AppSize.PADDING_SIZE_S,
-                ),
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                  ),
-                  children: [
-                    VideoItemWidget(
-                      width: _size['width'],
-                      heigth: _size['heigth'],
-                      paddingMax: _size['paddingMax'],
-                      paddingSmall: _size['paddingSmall'],
-                    ),
-                    VideoItemWidget(
-                      width: _size['width'],
-                      heigth: _size['heigth'],
-                      paddingMax: _size['paddingSmall'],
-                      paddingSmall: _size['paddingMax'],
-                    ),
-                    VideoItemWidget(
-                      width: _size['width'],
-                      heigth: _size['heigth'],
-                      paddingMax: _size['paddingMax'],
-                      paddingSmall: _size['paddingSmall'],
-                    ),
-                    VideoItemWidget(
-                      width: _size['width'],
-                      heigth: _size['heigth'],
-                      paddingMax: _size['paddingSmall'],
-                      paddingSmall: _size['paddingMax'],
-                    ),
-                    VideoItemWidget(
-                      width: _size['width'],
-                      heigth: _size['heigth'],
-                      paddingMax: _size['paddingMax'],
-                      paddingSmall: _size['paddingSmall'],
-                    ),
-                    VideoItemWidget(
-                      type: 'mv',
-                      width: _size['width'],
-                      heigth: _size['heigth'],
-                      paddingMax: _size['paddingSmall'],
-                      paddingSmall: _size['paddingMax'],
-                    ),
-                  ],
-                ),
-              );
+              return ItemPage(size: _size, title: _list[index]);
             },
             itemCount: _list.length,
             controller: _controller,

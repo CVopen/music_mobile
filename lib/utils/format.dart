@@ -8,8 +8,19 @@ String computePlay(_num) {
   return _num.toString();
 }
 
+formatDuration(duration) {
+  if (duration > 0) {
+    int min = duration / 1000 ~/ 60;
+    var sec = duration / 1000 % 60;
+    sec = sec < 10 ? '0${sec ~/ 1}' : '${sec ~/ 1}';
+
+    return "$min:$sec";
+  }
+  return '';
+}
+
 // 生成随机数
-createArr(count, max, [arr]) {
+List createArr(count, max, [arr]) {
   List result = [];
   if (arr == null) arr = [];
   result.addAll(arr);

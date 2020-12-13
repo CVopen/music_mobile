@@ -46,7 +46,13 @@ List<Widget> backFilter(double size, String url) {
       left: 0,
       child: Container(
         margin: const EdgeInsets.only(left: 5, right: 5),
-        child: ImageRadius(url, size - 10, (size - 10) / 2.1, radius: 5),
+        child: ImageRadius(
+          url,
+          size - 10,
+          (size - 10) / 2.1,
+          radius: 5,
+          twoOne: true,
+        ),
       ),
     ),
   ];

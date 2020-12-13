@@ -64,4 +64,19 @@ class ApiHome {
 
   // 新建歌单
   deletePalyList(data) => _request.get('/playlist/delete', data: data);
+
+  // 最新MV
+  getMvFirst(data) => _request.get('/mv/first', data: data);
+
+  // 全部MV
+  getMvAll(data) => _request.get('/mv/all', data: data);
+
+  // 推荐MV
+  getPersonalizedMv() => _request.get('/personalized/mv');
+
+  // 网易出品MV
+  getRcmdMv(data) => _request.get('/mv/exclusive/rcmd', data: data);
+
+  // 获取 mv 点赞转发评论数数据
+  getDetail(data) => _request.get('/mv/detail/info', data: data);
 }

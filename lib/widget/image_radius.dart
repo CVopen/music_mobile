@@ -9,6 +9,7 @@ class ImageRadius extends StatelessWidget {
   final double topRight;
   final double bottomLeft;
   final double bottomRight;
+  final bool twoOne;
 
   const ImageRadius(
     this.url,
@@ -20,6 +21,7 @@ class ImageRadius extends StatelessWidget {
     this.topRight = 0,
     this.bottomLeft = 0,
     this.bottomRight = 0,
+    this.twoOne,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class ImageRadius extends StatelessWidget {
         height: height,
         fit: BoxFit.fill,
         placeholder: "assets/images/loading.gif",
-        image: url + '?param=150y150',
+        image: url + (twoOne == null ? '?param=150y150' : '?param=150y75'),
       ),
     );
   }

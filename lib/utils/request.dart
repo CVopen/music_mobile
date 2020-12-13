@@ -17,7 +17,8 @@ class Request {
   Request._init() {
     _dio = Dio(BaseOptions(
       // baseUrl: 'http://192.168.1.108:3000/',
-      baseUrl: 'http://192.168.1.8:3000/',
+      // baseUrl: 'http://192.168.1.8:3000/',
+      baseUrl: 'https://www.vulpix.top',
       connectTimeout: 6000,
       receiveTimeout: 6000,
     ));
@@ -59,7 +60,6 @@ class Request {
     if (data != null) {
       return _http(path, 'get', data: data);
     } else {
-      print(123);
       return _http(path, 'get');
     }
   }
@@ -78,7 +78,6 @@ class Request {
           } else {
             getResponse = await _dio.get(path);
           }
-          // print('getResponse $getResponse');
           return getResponse;
         case 'post':
           var postResponse = await _dio.post(path, data: data);
