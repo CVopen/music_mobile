@@ -68,8 +68,8 @@ class _HomePageState extends State<HomePage>
         VideoPage(),
       ];
     });
-    _currentIndex = 2;
-    _controller = PageController(initialPage: 2);
+    _currentIndex = 3;
+    _controller = PageController(initialPage: 3);
     this._createBottom();
     // this._refresh();
   }

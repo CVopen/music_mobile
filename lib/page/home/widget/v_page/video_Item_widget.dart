@@ -41,8 +41,14 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
               ? widget.data['picUrl']
               : widget.data['cover'],
         );
-        this._getMvInfo();
       });
+    }
+    if (widget.data['data'] != null) {
+      setState(() {
+        _like = computePlay(widget.data['data']['praisedCount']);
+      });
+    } else {
+      this._getMvInfo();
     }
   }
 
@@ -74,7 +80,9 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                 Container(
                   child: ImageRadius(
                     widget.data['cover'] == null
-                        ? widget.data['picUrl']
+                        ? (widget.data['picUrl'] != null
+                            ? widget.data['picUrl']
+                            : widget.data['data']['coverUrl'])
                         : widget.data['cover'],
                     widget.width,
                     widget.heigth,
@@ -98,7 +106,10 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                           ),
                           child: ImageRadius(
                             widget.data['cover'] == null
-                                ? widget.data['picUrl']
+                                ? (widget.data['picUrl'] != null
+                                    ? widget.data['picUrl']
+                                    : widget.data['data']['creator']
+                                        ['avatarUrl'])
                                 : widget.data['cover'],
                             20,
                             20,
@@ -110,7 +121,9 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                           alignment: Alignment.bottomCenter,
                           height: 24,
                           child: Text(
-                            formatDuration(widget.data['duration']),
+                            formatDuration((widget.data['duration'] != null
+                                ? widget.data['duration']
+                                : widget.data['data']['durationms'])),
                             style: const TextStyle(
                               color: Color.fromRGBO(255, 255, 255, .5),
                               fontSize: 12.0,
@@ -139,7 +152,9 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.data['name'],
+                    widget.data['name'] != null
+                        ? widget.data['name']
+                        : widget.data['data']['title'],
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: const TextStyle(height: 1, fontSize: 14),
@@ -153,7 +168,9 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                         size: 16,
                       ),
                       Text(
-                        computePlay(widget.data['playCount']),
+                        computePlay((widget.data['playCount'] != null
+                            ? widget.data['playCount']
+                            : widget.data['data']['playTime'])),
                         style: const TextStyle(
                             height: 1, fontSize: 12, color: Colors.black54),
                       ),

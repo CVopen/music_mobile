@@ -79,4 +79,10 @@ class ApiHome {
 
   // 获取 mv 点赞转发评论数数据
   getDetail(data) => _request.get('/mv/detail/info', data: data);
+
+  // 获取视频分类列表
+  getVideoCategory() => _request.get('/video/category/list');
+
+  // 获取视频标签/分类下的视频
+  getGroupMv(data) => _request.get('/video/group', data: data);
 }

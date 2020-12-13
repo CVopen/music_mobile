@@ -11,7 +11,7 @@ import 'video_Item_widget.dart';
 
 class ItemPage extends StatefulWidget {
   final Map size;
-  final String title;
+  final title;
 
   const ItemPage({Key key, @required this.size, @required this.title})
       : super(key: key);
@@ -32,14 +32,18 @@ class _ItemPageState extends State<ItemPage>
   @override
   void initState() {
     super.initState();
-    if (widget.title == '最新') {
-      this._getMv();
-    } else if (widget.title == '推荐') {
-      this._getPerMv();
-    } else if (widget.title == '网易出品') {
-      this._getRcmd();
+    if (widget.title is String) {
+      if (widget.title == '最新') {
+        this._getMv();
+      } else if (widget.title == '推荐') {
+        this._getPerMv();
+      } else if (widget.title == '网易出品') {
+        this._getRcmd();
+      } else {
+        this._getMvTitile();
+      }
     } else {
-      this._getMvTitile();
+      this._getVideoList();
     }
     // 监听滚动事件
     _controller.addListener(() {
@@ -49,7 +53,12 @@ class _ItemPageState extends State<ItemPage>
           _offset++;
           loading = false;
         });
-        this._getMvTitile();
+
+        if (widget.title is String) {
+          this._getMvTitile();
+        } else {
+          this._getVideoList();
+        }
       }
     });
   }
@@ -65,14 +74,18 @@ class _ItemPageState extends State<ItemPage>
       _list.clear();
       _offset = 0;
     });
-    if (widget.title == '最新') {
-      this._getMv();
-    } else if (widget.title == '推荐') {
-      this._getPerMv();
-    } else if (widget.title == '网易出品') {
-      this._getRcmd();
+    if (widget.title is String) {
+      if (widget.title == '最新') {
+        this._getMv();
+      } else if (widget.title == '推荐') {
+        this._getPerMv();
+      } else if (widget.title == '网易出品') {
+        this._getRcmd();
+      } else {
+        this._getMvTitile();
+      }
     } else {
-      this._getMvTitile();
+      this._getVideoList();
     }
     await Future.delayed(Duration(seconds: 1), () {
       print('我刷新了');
@@ -121,12 +134,23 @@ class _ItemPageState extends State<ItemPage>
     });
   }
 
+  // 获取视频
+  Future _getVideoList() async {
+    var res = await ApiHome()
+        .getGroupMv({'id': widget.title['id'], 'offset': _offset});
+    setState(() {
+      _list.addAll(res.data['datas']);
+      noMore = res.data['hasmore'];
+      loading = true;
+    });
+  }
+
   List<Widget> _createItem() {
     List<Widget> arr = [];
     _list.forEach((element) {
       int index = _list.indexOf(element);
       arr.add(VideoItemWidget(
-        type: 'mv',
+        type: widget.title is String ? 'mv' : null,
         width: widget.size['width'],
         heigth: widget.size['heigth'],
         paddingLeft: index % 2 == 0
