@@ -40,7 +40,7 @@ class ImageRadius extends StatelessWidget {
         height: height,
         fit: BoxFit.fill,
         placeholder: "assets/images/loading.gif",
-        image: url + (twoOne == null ? '?param=150y150' : '?param=150y75'),
+        image: url + (twoOne == null ? '?param=240y240' : '?param=200y100'),
       ),
     );
   }

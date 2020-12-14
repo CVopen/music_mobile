@@ -22,8 +22,8 @@ void main() {
           children: [
             MyApp(),
             Positioned(
-              bottom: 0,
-              left: 50,
+              bottom: 50,
+              left: 0,
               child: MusicWidget(),
             ),
           ],

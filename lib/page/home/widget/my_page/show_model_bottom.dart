@@ -38,28 +38,8 @@ Function myShowModalBottomSheet(context, double height, count, callback, id) {
             ),
             InkWell(
               onTap: () {
-                return showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      content: Text('确认删除'),
-                      actions: <Widget>[
-                        FlatButton(
-                          child: Text('取消'),
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
-                        FlatButton(
-                          child: Text('确认'),
-                          onPressed: () {
-                            callback(id);
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+                callback(id);
+                Navigator.of(context).pop();
               },
               child: Container(
                 padding: const EdgeInsets.fromLTRB(AppSize.PADDING_SIZE,

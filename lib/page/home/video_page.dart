@@ -43,10 +43,6 @@ class _VideoPageState extends State<VideoPage>
       _list = arr;
       _listTitle = arrTitle;
     });
-    // ApiHome().getGroupMv({'id': _list[0]['id']}).then((res) {
-    // print(res.data['datas'].length);
-    // print(res.data);
-    // });
   }
 
   _calcSize(widthAll) {

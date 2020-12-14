@@ -8,6 +8,11 @@ class MusicWidget extends StatefulWidget {
 class _MusicWidgetState extends State<MusicWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: null);
+    // return Container(
+    //   height: 20,
+    //   width: 400,
+    //   color: Colors.red,
+    // );
+    return Container();
   }
 }
