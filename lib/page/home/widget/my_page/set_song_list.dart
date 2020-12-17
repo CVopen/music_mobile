@@ -7,8 +7,6 @@ import 'package:music_mobile/widget/show_dialog.dart';
 import 'package:provider/provider.dart';
 import '../../../../common/variable.dart';
 
-import 'show_model_bottom.dart';
-
 // 创建歌单
 class SetSongList extends StatefulWidget {
   final String title;
@@ -215,17 +213,35 @@ class SongItem extends StatelessWidget {
               const Expanded(
                 child: Text(''),
               ),
-              IconButton(
-                icon: const Icon(
+              PopupMenuButton(
+                icon: Icon(
                   Icons.more_vert,
                   size: 20,
                   color: Color(AppColors.FONT_COLOR),
                 ),
-                onPressed: () {
-                  myShowModalBottomSheet(context, 100.0, item['trackCount'],
-                      _delMusicList, item['id']);
+                onSelected: (String value) {
+                  _delMusicList(item['id']);
                 },
-              )
+                itemBuilder: (BuildContext context) => [
+                  PopupMenuItem(
+                    value: "del",
+                    height: 20,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.delete,
+                          size: 14,
+                        ),
+                        const SizedBox(width: AppSize.PADDING_SIZE_S),
+                        const Text(
+                          '删除',
+                          style: TextStyle(fontSize: AppSize.FONT_SIZE_S),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

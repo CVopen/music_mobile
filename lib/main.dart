@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:music_mobile/page/audio/audio_widget.dart';
 
 import 'common/variable.dart' show AppColors;
 
@@ -15,21 +14,7 @@ import 'package:music_mobile/store/provider_steup.dart';
 void main() {
   runApp(MultiProvider(
     providers: providers,
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Container(
-        child: Stack(
-          children: [
-            MyApp(),
-            Positioned(
-              bottom: 50,
-              left: 0,
-              child: MusicWidget(),
-            ),
-          ],
-        ),
-      ),
-    ),
+    child: MyApp(),
   ));
 
   if (Platform.isAndroid) {

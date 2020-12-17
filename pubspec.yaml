@@ -36,6 +36,7 @@ dependencies:
   fluttertoast: 7.1.5
   provider: ^4.3.2+2
   shared_preferences: ^0.5.12+4
+  audioplayers: ^0.17.0
   # fluro: ^1.7.7
 
 dev_dependencies:
@@ -69,6 +70,7 @@ flutter:
     - assets/images/loading.gif
     - assets/images/loading_more.gif
     - assets/images/logo.svg
+    - assets/images/audio_bg.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

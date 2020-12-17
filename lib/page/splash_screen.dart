@@ -32,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen>
           SharedPreferences prefs = await SharedPreferences.getInstance();
           // ignore: await_only_futures
           String infos = await prefs.getString('userInfo');
-          // // ignore: await_only_futures
-          // int color = await prefs.getInt('color');
+
           if (infos != null) {
             _url = '/home_page';
+            // _url = '/list_page';
             Provider.of<LoginInfo>(context, listen: false).loginSet = infos;
           }
 

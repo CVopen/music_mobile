@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music_mobile/api/home_page.dart';
+import 'package:music_mobile/page/audio/audio_widget.dart';
+import 'package:music_mobile/store/audio_info.dart';
 import 'package:music_mobile/store/login_info.dart';
 import 'package:music_mobile/store/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +59,8 @@ class _HomePageState extends State<HomePage>
   int _currentIndex;
 
   PageController _controller;
+  GlobalKey _key = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -71,7 +77,10 @@ class _HomePageState extends State<HomePage>
     _currentIndex = 1;
     _controller = PageController(initialPage: 1);
     this._createBottom();
-    // this._refresh();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AudioInfo>(context, listen: false).showSet = true;
+    });
   }
 
   _createBottom() {
@@ -122,9 +131,20 @@ class _HomePageState extends State<HomePage>
           ],
         ),
         drawer: DrawerWidget(),
-        body: SafeArea(
-          top: true,
-          child: _buildBodyWidget(),
+        body: Column(
+          children: [
+            Expanded(
+              child: SafeArea(
+                top: true,
+                child: _buildBodyWidget(),
+              ),
+            ),
+            // 播放条
+            Consumer<AudioInfo>(builder: (_, provider, child) {
+              // return SizedBox(height: provider.show ? provider.sizeHeight : 0);
+              return MusicWidget();
+            }),
+          ],
         ),
         bottomNavigationBar: Theme(
           // 去除bottombar水波纹点击效果
@@ -156,8 +176,9 @@ class _HomePageState extends State<HomePage>
 
   Widget _buildBottomNavigationBarWidget() {
     return BottomNavigationBar(
+      key: _key,
       elevation: 0.0,
-      items: _bottomNavigationBarItems.map((e) => e).toList(),
+      items: _bottomNavigationBarItems,
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
       selectedItemColor:
@@ -165,7 +186,7 @@ class _HomePageState extends State<HomePage>
       selectedFontSize: AppSize.FONT_SIZE_S,
       onTap: (index) {
         setState(() {
-          // _currentIndex = index;
+          _currentIndex = index;
           _controller.jumpToPage(index);
         });
       },

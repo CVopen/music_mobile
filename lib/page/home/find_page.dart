@@ -180,15 +180,29 @@ class IconFind extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Consumer<ThemeModel>(builder: (context, t, child) {
-          return Container(
-            padding: const EdgeInsets.all(AppSize.PADDING_SIZE_S),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(t.getColor),
-            ),
-            child: Icon(
-              icon,
-              color: Colors.white,
+          return InkWell(
+            highlightColor: Colors.transparent,
+            radius: 0.0,
+            onTap: () {
+              String _url;
+              switch (text) {
+                case '歌单':
+                  _url = '/list_page';
+                  break;
+                default:
+              }
+              Navigator.pushNamed(context, _url);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(AppSize.PADDING_SIZE_S),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(t.getColor),
+              ),
+              child: Icon(
+                icon,
+                color: Colors.white,
+              ),
             ),
           );
         }),

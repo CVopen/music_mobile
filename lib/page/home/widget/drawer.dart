@@ -205,6 +205,7 @@ class ThemeSelect extends StatelessWidget {
               onTap: () {
                 Provider.of<ThemeModel>(context, listen: false).setColor =
                     color;
+                Navigator.of(context).pop();
               },
               child: Container(
                 width: 26,
