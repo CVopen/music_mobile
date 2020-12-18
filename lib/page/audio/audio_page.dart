@@ -40,6 +40,7 @@ class _AudioPageState extends State<AudioPage> {
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: AppSize.FONT_SIZE,
+                      height: 1,
                     ),
                   ),
                   Text(
@@ -47,6 +48,7 @@ class _AudioPageState extends State<AudioPage> {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: AppSize.FONT_SIZE_B,
+                      height: 1,
                     ),
                   )
                 ],

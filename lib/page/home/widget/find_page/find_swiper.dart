@@ -16,8 +16,10 @@ class FindSwiper extends StatefulWidget {
 class _FindSwiperState extends State<FindSwiper> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      height: 180,
+      height: (size.width - AppSize.PADDING_SIZE_B * 2) * 284 / 730 +
+          AppSize.PADDING_SIZE_B * 2,
       child: Swiper(
         key: UniqueKey(),
         itemBuilder: (BuildContext context, int index) {

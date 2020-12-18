@@ -18,11 +18,11 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     return Container(
-      height: 60,
+      height: 50,
       child: Row(
         children: [
           Container(
-            height: 60,
+            height: 50,
             width: 40,
             child: InkWell(
               highlightColor: Colors.transparent,
@@ -40,7 +40,8 @@ class HeaderWidget extends StatelessWidget {
           Container(
             width: _size.width - 80,
             padding: EdgeInsets.all(AppSize.PADDING_SIZE_S),
-            height: 60,
+            alignment: Alignment.center,
+            height: 50,
             child: content,
           ),
           rightWidget == null ? Container(width: 40.0) : rightWidget,

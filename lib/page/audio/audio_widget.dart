@@ -91,6 +91,8 @@ class _MusicWidgetState extends State<MusicWidget> {
       ),
       child: Material(
         child: InkWell(
+          highlightColor: Colors.transparent,
+          radius: 0.0,
           onTap: () {
             Navigator.pushNamed(context, '/audio_page');
           },
@@ -113,11 +115,13 @@ class _MusicWidgetState extends State<MusicWidget> {
                         color: Color(AppColors.FONT_EM_COLOR),
                         fontSize: AppSize.FONT_SIZE_M,
                         decoration: TextDecoration.none,
+                        height: 1,
                       ),
                     ),
                     Text(
                       ' - asd',
                       style: const TextStyle(
+                        height: 1,
                         color: Color(AppColors.FONT_COLOR),
                         fontSize: AppSize.FONT_SIZE_S,
                         decoration: TextDecoration.none,

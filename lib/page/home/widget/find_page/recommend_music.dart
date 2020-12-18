@@ -16,7 +16,6 @@ class _RecommendMusicState extends State<RecommendMusic> {
     return Container(
       height: 180,
       child: ListView.builder(
-        // key: UniqueKey(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           if (index == widget.personalizedList.length - 1) {
@@ -40,8 +39,8 @@ class _RecommendMusicState extends State<RecommendMusic> {
           return Container(
             margin: const EdgeInsets.fromLTRB(AppSize.PADDING_SIZE_B,
                 AppSize.PADDING_SIZE_B, 0, AppSize.PADDING_SIZE_B),
-            width: 120,
-            height: 140,
+            width: 100,
+            height: 120,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

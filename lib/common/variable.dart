@@ -11,9 +11,9 @@ abstract class AppColors {
   static const BACKGROUND_COLOR = 0xffffffff; // 部分背景色
   static const BACKGROUND_COLOR_DEEP = 0xffeeeeee; // 部分背景色
 
-  static const FONT_COLOR = 0xff555555; // 不重要字体颜色
+  static const FONT_COLOR = 0xffb4b4b4; // 不重要字体颜色
 
-  static const FONT_MAIN_COLOR = 0xff222222; // 主要字体颜色
+  static const FONT_MAIN_COLOR = 0xff666666; // 主要字体颜色
   static const BORDER_COLOR = 0xff222222; // 边框颜色
 
   static const BORDER_COLOR2 = 0xff999999; // 边框颜色
