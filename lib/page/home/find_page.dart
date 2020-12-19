@@ -186,12 +186,12 @@ class IconFind extends StatelessWidget {
             onTap: () {
               String _url;
               switch (text) {
-                case '歌单':
+                case '每日推荐':
                   _url = '/list_page';
                   break;
                 default:
               }
-              Navigator.pushNamed(context, _url);
+              Navigator.pushNamed(context, _url, arguments: {'title': '每日推荐'});
             },
             child: Container(
               padding: const EdgeInsets.all(AppSize.PADDING_SIZE_S),

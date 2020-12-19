@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:music_mobile/api/music_list_page.dart';
 import 'package:music_mobile/common/variable.dart';
 import 'package:music_mobile/page/audio/audio_widget.dart';
-import 'package:music_mobile/store/theme_model.dart';
-import 'package:music_mobile/utils/format.dart';
+import 'package:music_mobile/page/musicList/all_mask.dart';
+import 'package:music_mobile/page/musicList/list_item.dart';
 import 'package:music_mobile/widget/Header.dart';
-import 'package:music_mobile/widget/image_radius.dart';
-import 'package:provider/provider.dart';
+
+import 'list_info.dart';
 
 class MusicListPage extends StatefulWidget {
   final Map arguments;
@@ -19,14 +19,20 @@ class MusicListPage extends StatefulWidget {
 }
 
 class _MusicListPageState extends State<MusicListPage> {
-  Map _playListInfo = {};
+  Map _playListInfo = {
+    'coverImgUrl':
+        'http://p1.music.126.net/fWQ5EX9BDCvuaKqtZoYs3A==/109951165425855499.jpg'
+  };
   List _list = [];
 
   @override
   void initState() {
     super.initState();
-    print(widget.arguments['id']);
-    this._getMusicList();
+    if (widget.arguments['id'] == null) {
+      this._getRecommendList();
+    } else {
+      this._getMusicList();
+    }
   }
 
   _getMusicList() async {
@@ -42,6 +48,13 @@ class _MusicListPageState extends State<MusicListPage> {
       _playListInfo['creator'] = res.data['playlist']['creator'];
 
       _list = res.data['playlist']['tracks'];
+    });
+  }
+
+  _getRecommendList() async {
+    var res = await ApiList().getListRecommend();
+    setState(() {
+      _list = res.data['data']['dailySongs'];
     });
   }
 
@@ -65,7 +78,7 @@ class _MusicListPageState extends State<MusicListPage> {
                       )
                     : null,
               ),
-              Mask(size: _size),
+              Mask(),
               Positioned(
                 top: _barHeight,
                 child: HeaderWidget(
@@ -83,8 +96,8 @@ class _MusicListPageState extends State<MusicListPage> {
                 top: _barHeight + 60,
                 height: _size.width / 1.5 - 75 - _barHeight,
                 width: _size.width,
-                child: _playListInfo.isEmpty
-                    ? Text('')
+                child: _playListInfo['playCount'] == null
+                    ? const DayInfo()
                     : ListInfo(info: _playListInfo),
               ),
             ],
@@ -105,314 +118,6 @@ class _MusicListPageState extends State<MusicListPage> {
           ),
           MusicWidget()
         ],
-      ),
-    );
-  }
-}
-
-class AllPlay extends StatelessWidget {
-  final int count;
-
-  const AllPlay({
-    Key key,
-    this.count = 0,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      highlightColor: Colors.transparent,
-      radius: 0.0,
-      onTap: () {
-        print('播放');
-      },
-      child: Padding(
-        padding: EdgeInsets.all(AppSize.PADDING_SIZE_B),
-        child: Row(
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: AppSize.PADDING_SIZE_B),
-              decoration: BoxDecoration(
-                color: Color(
-                    Provider.of<ThemeModel>(context, listen: false).getColor),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(3),
-                child: const Icon(
-                  Icons.play_arrow,
-                  size: 18.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Text(
-              '播放全部 ($count)',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ListInfo extends StatelessWidget {
-  final Map info;
-  const ListInfo({
-    Key key,
-    @required this.info,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final _size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.only(left: 20, right: 20),
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.black.withOpacity(.2),
-      ),
-      child: Column(
-        children: [
-          Text(
-            info['name'],
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: AppSize.FONT_SIZE,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ImageRadius(info['creator']['avatarUrl'], 25, 25, radius: 12.5),
-              SizedBox(width: 5),
-              Text(
-                info['creator']['nickname'],
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: AppSize.FONT_SIZE_M,
-                  height: 1,
-                ),
-              ),
-              SizedBox(width: 5),
-              InkWell(
-                highlightColor: Colors.transparent,
-                radius: 0.0,
-                onTap: () {
-                  print('播放');
-                },
-                child: Container(
-                  padding: EdgeInsets.only(left: 5, right: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.grey.withOpacity(.4),
-                  ),
-                  child: Icon(
-                    Icons.add,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Text(
-              info['description'],
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: AppSize.FONT_SIZE_M,
-                height: 1,
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.white.withOpacity(.2),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: (_size.width - 100) / 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.play_arrow, color: Colors.white),
-                      SizedBox(width: AppSize.BOX_SIZE_WIDTH_S),
-                      Text(
-                        computePlay(info['commentCount']),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: AppSize.FONT_SIZE_M,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: (_size.width - 100) / 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.sms, color: Colors.white),
-                      SizedBox(width: AppSize.BOX_SIZE_WIDTH_S),
-                      Text(
-                        computePlay(info['commentCount']),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: AppSize.FONT_SIZE_M,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: (_size.width - 100) / 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add, color: Colors.white),
-                      SizedBox(width: AppSize.BOX_SIZE_WIDTH_S),
-                      Text(
-                        computePlay(info['subscribedCount']),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: AppSize.FONT_SIZE_M,
-                          height: 1,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class Mask extends StatelessWidget {
-  const Mask({
-    Key key,
-    @required Size size,
-  })  : _size = size,
-        super(key: key);
-
-  final Size _size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: _size.width,
-      height: _size.width / 2,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF090e42).withOpacity(0.8),
-            Color(0xFFfd5f74).withOpacity(0.6)
-          ],
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-        ),
-      ),
-    );
-  }
-}
-
-class MusicListItem extends StatelessWidget {
-  final Map item;
-  const MusicListItem({
-    Key key,
-    @required this.item,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(AppSize.PADDING_SIZE_B),
-      child: InkWell(
-        highlightColor: Colors.transparent,
-        radius: 0.0,
-        onTap: () {
-          print('播放');
-        },
-        child: Row(
-          children: [
-            ImageRadius(item['al']['picUrl'], 50, 50),
-            const SizedBox(width: AppSize.PADDING_SIZE_S),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(AppSize.PADDING_SIZE_S),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item['name'],
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        fontSize: AppSize.FONT_SIZE_B,
-                        height: 1,
-                        color: Color(
-                          AppColors.FONT_MAIN_COLOR,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      item['ar'][0]['name'],
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        fontSize: AppSize.FONT_SIZE_M,
-                        color: Color(
-                          AppColors.FONT_COLOR,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              highlightColor: Colors.transparent,
-              radius: 0.0,
-              child: const Icon(
-                Icons.live_tv,
-                color: Color(AppColors.FONT_COLOR),
-              ),
-              onTap: () {},
-            ),
-            const SizedBox(width: AppSize.BOX_SIZE_WIDTH_B),
-            InkWell(
-              highlightColor: Colors.transparent,
-              radius: 0.0,
-              child: const Icon(
-                Icons.more_vert,
-                color: Color(AppColors.FONT_COLOR),
-              ),
-              onTap: () {
-                print('点击打开歌单');
-              },
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -21,6 +21,11 @@ class ApiList {
     return _request.get('/playlist/detail', data: data);
   }
 
+  // 获取每日推荐歌曲
+  getListRecommend() {
+    return _request.get('/recommend/songs');
+  }
+
   // 邮箱登录
   login(data) {
     return _request.post('/login', data);
