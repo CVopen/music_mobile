@@ -180,7 +180,8 @@ class SongItem extends StatelessWidget {
       color: Color(AppColors.BACKGROUND_COLOR),
       child: InkWell(
         onTap: () {
-          print('InkWell');
+          Navigator.pushNamed(context, '/list_page',
+              arguments: {'id': item['id'], 'title': '歌单'});
         },
         child: Container(
           margin: EdgeInsets.only(bottom: AppSize.PADDING_SIZE_S),

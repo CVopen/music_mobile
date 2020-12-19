@@ -43,6 +43,7 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   _getUserBind() async {
     Map _info = Provider.of<LoginInfo>(context, listen: false).loginGet;
     var res = await ApiHome().getPlaylist({'uid': _info['account']['id']});
+    print(_info['account']['id']);
     List _create = [];
     List _collect = [];
     setState(() {

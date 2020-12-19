@@ -22,7 +22,8 @@ class LikeMusic extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          print('跳转到喜欢歌单');
+          Navigator.pushNamed(context, '/list_page',
+              arguments: {'id': likeMusic['id'], 'title': '喜欢'});
         },
         child: Row(
           children: [
