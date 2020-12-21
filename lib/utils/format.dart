@@ -16,7 +16,7 @@ formatDuration(duration) {
 
     return "$min:$sec";
   }
-  return '';
+  return '0:00';
 }
 
 // 生成随机数

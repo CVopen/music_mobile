@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
 
           if (infos != null) {
             _url = '/home_page';
-            // _url = '/list_page';
+            // _url = '/video_page';
             Provider.of<LoginInfo>(context, listen: false).loginSet = infos;
           }
 

@@ -71,7 +71,13 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
       ),
       child: InkWell(
         onTap: () {
-          print('该跳转播放了');
+          print(widget.data['id']);
+          print(widget.data['name']);
+          Navigator.pushNamed(
+            context,
+            '/video_page',
+            arguments: {'id': widget.data['id'], 'name': widget.data['name']},
+          );
         },
         child: Column(
           children: [

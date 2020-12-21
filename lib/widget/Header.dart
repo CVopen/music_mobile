@@ -6,12 +6,13 @@ class HeaderWidget extends StatelessWidget {
   final IconData back;
   final Widget content;
   final Widget rightWidget;
-
+  final ValueChanged callback;
   const HeaderWidget({
     Key key,
     @required this.back,
     this.content,
     this.rightWidget,
+    this.callback,
   }) : super(key: key);
 
   @override
@@ -33,7 +34,11 @@ class HeaderWidget extends StatelessWidget {
                 size: 30,
               ),
               onTap: () {
-                Navigator.of(context).pop();
+                if (callback != null) {
+                  callback('');
+                } else {
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ),

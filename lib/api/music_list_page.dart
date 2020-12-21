@@ -25,22 +25,4 @@ class ApiList {
   getListRecommend() {
     return _request.get('/recommend/songs');
   }
-
-  // 邮箱登录
-  login(data) {
-    return _request.post('/login', data);
-  }
-
-  // 发送验证码
-  sendCode(data) {
-    return _request.get('/captcha/sent', data: data);
-  }
-
-  // 验证验证码
-  verify(data) {
-    return _request.get('/captcha/verify', data: data);
-  }
-
-  // 退出登录
-  logout() => _request.get('/logout');
 }

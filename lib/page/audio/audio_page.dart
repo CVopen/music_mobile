@@ -60,19 +60,28 @@ class _AudioPageState extends State<AudioPage> {
             width: _size.width,
             child: Column(
               children: [
-                Slider(
-                  value: _dollars.toDouble(),
-                  min: 0,
-                  max: 100.0,
-                  activeColor: Color(0xffec7194),
-                  onChanged: (double newValue) {
-                    setState(() {
-                      _dollars = newValue.round();
-                    });
-                  },
-                  semanticFormatterCallback: (double newValue) {
-                    return '${newValue.round()} dollars';
-                  },
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    trackHeight: 2,
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5),
+                    overlayShape: RoundSliderOverlayShape(
+                      overlayRadius: 12.0,
+                    ),
+                  ),
+                  child: Slider(
+                    value: _dollars.toDouble(),
+                    min: 0,
+                    max: 100.0,
+                    activeColor: Color(0xffec7194),
+                    onChanged: (double newValue) {
+                      setState(() {
+                        _dollars = newValue.round();
+                      });
+                    },
+                    semanticFormatterCallback: (double newValue) {
+                      return '${newValue.round()} dollars';
+                    },
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
