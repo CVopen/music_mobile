@@ -8,7 +8,7 @@ String computePlay(_num) {
   return _num.toString();
 }
 
-formatDuration(duration) {
+String formatDuration(duration) {
   if (duration > 0) {
     int min = duration / 1000 ~/ 60;
     var sec = duration / 1000 % 60;
@@ -17,6 +17,11 @@ formatDuration(duration) {
     return "$min:$sec";
   }
   return '0:00';
+}
+
+String formaDate(time) {
+  var date = DateTime.fromMicrosecondsSinceEpoch(time * 1000);
+  return '${date.year.toString()}- ${date.month.toString()}- ${date.day.toString()}';
 }
 
 // 生成随机数

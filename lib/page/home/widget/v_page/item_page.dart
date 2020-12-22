@@ -27,6 +27,7 @@ class _ItemPageState extends State<ItemPage>
   List _list = [];
   bool noMore = false; // 是否显示 没有更多
   bool loading = true;
+  bool isHttp = true;
   ScrollController _controller = new ScrollController();
 
   @override
@@ -50,10 +51,8 @@ class _ItemPageState extends State<ItemPage>
       if ((_controller.offset > _controller.position.maxScrollExtent - 10) &&
           noMore) {
         setState(() {
-          _offset++;
           loading = false;
         });
-
         if (widget.title is String) {
           this._getMvTitile();
         } else {
@@ -108,19 +107,25 @@ class _ItemPageState extends State<ItemPage>
 
   // 全部mv
   Future _getMvTitile() async {
-    var res = await ApiHome()
-        .getMvAll({'offset': _offset, 'limit': _limit, 'area': widget.title});
-    setState(() {
-      _list.addAll(res.data['data']);
-      noMore = res.data['hasMore'];
-      loading = true;
-    });
+    if (isHttp) {
+      setState(() {
+        isHttp = false;
+      });
+      var res = await ApiHome().getMvAll(
+          {'offset': _offset * _limit, 'limit': _limit, 'area': widget.title});
+      setState(() {
+        _list.addAll(res.data['data']);
+        noMore = res.data['hasMore'];
+        _offset++;
+        loading = true;
+        isHttp = true;
+      });
+    }
   }
 
   // 获取网易出品MV
   Future _getRcmd() async {
     var res = await ApiHome().getRcmdMv({'limit': _limit});
-    print(res.data['data'].length);
     setState(() {
       _list = res.data['data'];
     });
@@ -136,13 +141,20 @@ class _ItemPageState extends State<ItemPage>
 
   // 获取视频
   Future _getVideoList() async {
-    var res = await ApiHome()
-        .getGroupMv({'id': widget.title['id'], 'offset': _offset});
-    setState(() {
-      _list.addAll(res.data['datas']);
-      noMore = res.data['hasmore'];
-      loading = true;
-    });
+    if (isHttp) {
+      setState(() {
+        isHttp = false;
+      });
+      var res = await ApiHome()
+          .getGroupMv({'id': widget.title['id'], 'offset': _offset * _limit});
+      setState(() {
+        _list.addAll(res.data['datas']);
+        noMore = res.data['hasmore'];
+        loading = true;
+        _offset++;
+        isHttp = true;
+      });
+    }
   }
 
   List<Widget> _createItem() {

@@ -25,4 +25,9 @@ class ApiVideo {
   getSimiMv(data) {
     return _request.get('/simi/mv', data: data);
   }
+
+  // 获取mv 评论
+  getComment(data) {
+    return _request.get('/comment/mv', data: data);
+  }
 }

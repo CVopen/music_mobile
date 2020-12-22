@@ -145,7 +145,6 @@ class _VideoUiState extends State<VideoUi> {
   void didUpdateWidget(VideoUi oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.router['url'] != _url) {
-      print(123);
       _controller.dispose();
       _initPlay(widget.router['url']);
     }
@@ -176,9 +175,11 @@ class _VideoUiState extends State<VideoUi> {
                   print(e.velocity);
                 },
                 child: Container(
+                  width: _size.width,
+                  color: Colors.black,
                   height: _size.width > _size.height
                       ? _size.height
-                      : _size.width / _controller.value.aspectRatio,
+                      : _size.width / 1920 * 1080,
                   alignment: Alignment.center,
                   child: AspectRatio(
                     aspectRatio: _controller.value.aspectRatio,
@@ -187,7 +188,7 @@ class _VideoUiState extends State<VideoUi> {
                 ),
               )
             : Container(
-                height: _size.width / _controller.value.aspectRatio,
+                height: _size.width / 1920 * 1080 - _barHeight,
                 width: _size.width,
                 alignment: Alignment.center,
                 child: Image.asset(
@@ -207,7 +208,7 @@ class _VideoUiState extends State<VideoUi> {
               width: _size.width,
               height: _size.width > _size.height
                   ? _size.height
-                  : _size.width / _controller.value.aspectRatio,
+                  : _size.width / 1920 * 1080,
               color: Colors.transparent,
               child: Column(
                 children: [

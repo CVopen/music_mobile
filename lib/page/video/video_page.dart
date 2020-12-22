@@ -100,7 +100,7 @@ class _VideoPageState extends State<VideoPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.all(10),
                             child: Text(
                               '相关推荐',
@@ -118,7 +118,7 @@ class _VideoPageState extends State<VideoPage> {
                               }
                             },
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(bottom: 10, left: 10),
                             child: Text(
                               '评论',
@@ -128,7 +128,7 @@ class _VideoPageState extends State<VideoPage> {
                                   height: 1),
                             ),
                           ),
-                          Expanded(child: Comment())
+                          Expanded(child: Comment(id: _id))
                         ],
                       ),
                     ),

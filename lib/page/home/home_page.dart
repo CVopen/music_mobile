@@ -74,8 +74,8 @@ class _HomePageState extends State<HomePage>
         VideoPage(),
       ];
     });
-    _currentIndex = 1;
-    _controller = PageController(initialPage: 1);
+    _currentIndex = 2;
+    _controller = PageController(initialPage: 2);
     this._createBottom();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
