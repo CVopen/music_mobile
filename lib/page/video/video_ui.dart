@@ -8,6 +8,7 @@ import 'package:music_mobile/utils/format.dart';
 import 'package:music_mobile/widget/Header.dart';
 import 'package:video_player/video_player.dart';
 import 'package:screen/screen.dart';
+import 'package:volume_control/volume_control.dart';
 
 class VideoUi extends StatefulWidget {
   final ValueChanged<bool> callback;
@@ -28,12 +29,20 @@ class _VideoUiState extends State<VideoUi> {
   bool _isFullScreen = false; // 是否全屏
   VideoPlayerController _controller;
 
-  double _valuePostion = 0;
-  double _valueMax = 0;
+  double _valuePosition = 0; // 进度条当前值
+  double _valueMax = 0; // 进度条最大值
 
-  bool _playEnd = false;
+  bool _playEnd = false; // 是否播放结束
 
   String _url;
+
+  Offset _onPanDown; // 滑动开始时位置
+  Offset _optionsPlay;
+
+  double _valControl = 0; //亮度和音量
+  bool _showBright = true;
+  bool _showVolume = true;
+  bool _showControl = true;
 
   @override
   void initState() {
@@ -54,9 +63,9 @@ class _VideoUiState extends State<VideoUi> {
 
     _controller.addListener(() {
       setState(() {
-        _valuePostion = _controller.value.position.inMilliseconds.toDouble();
+        _valuePosition = _controller.value.position.inMilliseconds.toDouble();
         _valueMax = _controller.value.duration.inMilliseconds.toDouble();
-        if (_valuePostion == _valueMax) _playEnd = true;
+        if (_valuePosition == _valueMax) _playEnd = true;
       });
     });
   }
@@ -75,7 +84,7 @@ class _VideoUiState extends State<VideoUi> {
   void _playStep() {
     setState(() {
       _playEnd = false;
-      _controller.seekTo(Duration(milliseconds: _valuePostion.toInt()));
+      _controller.seekTo(Duration(milliseconds: _valuePosition.toInt()));
       if (!_controller.value.isPlaying) _controller.play();
     });
   }
@@ -103,7 +112,7 @@ class _VideoUiState extends State<VideoUi> {
   // 重新播放
   _replay() {
     setState(() {
-      _valuePostion = 0.0;
+      _valuePosition = 0.0;
       _playEnd = false;
       _controller.seekTo(Duration(milliseconds: 0));
     });
@@ -134,6 +143,90 @@ class _VideoUiState extends State<VideoUi> {
     });
   }
 
+  // 按下事件
+  _onPanDwon(DragDownDetails e) {
+    //打印手指按下的位置(相对于屏幕)
+    setState(() {
+      _onPanDown = e.globalPosition;
+      _optionsPlay = e.globalPosition;
+    });
+  }
+
+  _onPanUpdata(DragUpdateDetails e) {
+    Size _size = MediaQuery.of(context).size;
+
+    //用户手指滑动时，更新偏移，重新构建
+    if ((_onPanDown.dy - e.globalPosition.dy).abs() <= 20 &&
+        (_onPanDown.dx - e.globalPosition.dx).abs() > 20) {
+      // 进度条滑动
+      _setSlider(e, _size);
+    } else if ((_onPanDown.dx - e.globalPosition.dx).abs() <= 20 &&
+        (_onPanDown.dy - e.globalPosition.dy).abs() > 20) {
+      // 亮度和音量
+      setState(() {
+        _showControl = false;
+        if (e.globalPosition.dx < _size.width / 4) {
+          _showBright = false;
+        } else if (e.globalPosition.dx > _size.width / 4) {
+          _showVolume = false;
+        }
+      });
+      _setControl(_size, e);
+    }
+  }
+
+  // 亮度调节
+  _setControl(_size, e) async {
+    double _val;
+    if (!_showBright) {
+      _val = await Screen.brightness;
+    } else {
+      _val = await VolumeControl.volume;
+    }
+    double _proportion = (_optionsPlay.dy - e.globalPosition.dy) /
+        (_size.width / 1920 * 1080); // 与屏幕高度比例
+    double _position = _val + _proportion; // 值
+    if (_position < 0) {
+      _position = 0;
+    } else if (_position > 1) {
+      _position = 1;
+    }
+    !_showBright
+        ? Screen.setBrightness(_position)
+        : VolumeControl.setVolume(_position);
+    setState(() {
+      _valControl = _position;
+      _optionsPlay = e.globalPosition;
+    });
+  }
+
+  // 进度条
+  _setSlider(e, _size) {
+    double _proportion =
+        (e.globalPosition.dx - _optionsPlay.dx) / _size.width; // 与屏幕比例
+    double _offset = _proportion * _valueMax; // 偏移量
+    double _position = _valuePosition + _offset; // 播放进度
+    if (_position < 0) {
+      _position = 0;
+    } else if (_position > _valueMax) {
+      _position = _valueMax;
+    }
+    setState(() {
+      _valuePosition = _position;
+      _optionsPlay = e.globalPosition;
+      _playStep();
+    });
+  }
+
+  // 结束触摸
+  _endPan(DragEndDetails e) {
+    setState(() {
+      _showBright = true;
+      _showVolume = true;
+      _showControl = true;
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -154,6 +247,7 @@ class _VideoUiState extends State<VideoUi> {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
     final _barHeight = MediaQueryData.fromWindow(window).padding.top; // 获取状态栏高度
+
     return Stack(
       children: [
         _controller.value.initialized
@@ -162,21 +256,12 @@ class _VideoUiState extends State<VideoUi> {
                   _tapPlayVideo(false);
                 },
                 onDoubleTap: _playVideo,
-                onPanDown: (DragDownDetails e) {
-                  //打印手指按下的位置(相对于屏幕)
-                  print("用户手指按下：${e.globalPosition}");
-                },
-                //手指滑动时会触发此回调
-                onPanUpdate: (DragUpdateDetails e) {
-                  //用户手指滑动时，更新偏移，重新构建
-                },
-                onPanEnd: (DragEndDetails e) {
-                  //打印滑动结束时在x、y轴上的速度
-                  print(e.velocity);
-                },
+                onPanDown: _onPanDwon,
+                onPanUpdate: _onPanUpdata,
+                onPanEnd: _endPan,
                 child: Container(
                   width: _size.width,
-                  color: Colors.black,
+                  color: Colors.transparent,
                   height: _size.width > _size.height
                       ? _size.height
                       : _size.width / 1920 * 1080,
@@ -204,6 +289,9 @@ class _VideoUiState extends State<VideoUi> {
               _tapPlayVideo(true);
             },
             onDoubleTap: _playVideo,
+            onPanDown: _onPanDwon,
+            onPanUpdate: _onPanUpdata,
+            onPanEnd: _endPan,
             child: Container(
               width: _size.width,
               height: _size.width > _size.height
@@ -233,7 +321,7 @@ class _VideoUiState extends State<VideoUi> {
                     children: [
                       const SizedBox(width: 5.0),
                       Text(
-                        formatDuration(_valuePostion),
+                        formatDuration(_valuePosition),
                         style: const TextStyle(color: Colors.white),
                       ),
                       Expanded(
@@ -247,18 +335,15 @@ class _VideoUiState extends State<VideoUi> {
                             ),
                           ),
                           child: Slider(
-                            value: _valuePostion,
+                            value: _valuePosition,
                             min: 0,
                             max: _valueMax,
                             activeColor: Colors.white,
                             onChanged: (double newValue) {
                               setState(() {
-                                _valuePostion = newValue;
+                                _valuePosition = newValue;
                                 _playStep();
                               });
-                            },
-                            semanticFormatterCallback: (double newValue) {
-                              return '${newValue.round()} dollars';
                             },
                           ),
                         ),
@@ -313,6 +398,60 @@ class _VideoUiState extends State<VideoUi> {
                     color: Colors.white,
                   ),
                 ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 50,
+          left: _size.width / 3,
+          child: Offstage(
+            offstage: _showControl,
+            child: Container(
+              width: _size.width / 3,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(.2),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Row(
+                children: [
+                  !_showBright
+                      ? Icon(
+                          _valControl > 7.5
+                              ? Icons.brightness_1_sharp
+                              : (_valControl > 3.5
+                                  ? Icons.brightness_2_sharp
+                                  : Icons.brightness_3_sharp),
+                          color: Colors.white,
+                        )
+                      : const Text(''),
+                  !_showVolume
+                      ? Icon(
+                          Icons.volume_down_outlined,
+                          color: Colors.white,
+                        )
+                      : const Text(''),
+                  Expanded(
+                    child: SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: 2,
+                        thumbShape:
+                            const RoundSliderThumbShape(enabledThumbRadius: 5),
+                        overlayShape: const RoundSliderOverlayShape(
+                          overlayRadius: 12.0,
+                        ),
+                      ),
+                      child: Slider(
+                        value: _valControl,
+                        min: 0,
+                        max: 1,
+                        activeColor: Colors.white,
+                        onChanged: (double newValue) {},
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

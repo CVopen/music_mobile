@@ -96,7 +96,7 @@ class _VideoPageState extends State<VideoPage> {
                     offstage: _show,
                     child: Container(
                       width: double.infinity,
-                      color: Colors.white,
+                      color: Colors.white.withOpacity(0.85),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

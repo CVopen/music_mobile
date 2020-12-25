@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemeModel with ChangeNotifier {
   int color;
   List<Map> colorList = [
-    {'color': AppColors.IMPORTANT_COLOR, 'name': '基佬紫'},
-    {'color': AppColors.IMPORTANT_COLOR1, 'name': '猛男粉'},
+    {'color': AppColors.IMPORTANT_COLOR, 'name': '猛男粉'},
+    {'color': AppColors.IMPORTANT_COLOR1, 'name': '基佬紫'},
     {'color': AppColors.IMPORTANT_COLOR2, 'name': '骚气红'},
     {'color': AppColors.IMPORTANT_COLOR3, 'name': '咸蛋黄'},
     {'color': AppColors.IMPORTANT_COLOR4, 'name': '早苗绿'},

@@ -63,6 +63,9 @@ class _CommentState extends State<Comment> {
           arr.add(CommentIten(item: item));
         });
         commentListWidget.addAll(arr);
+        if (commentListWidget.length == total && total != 0) {
+          isMode = false;
+        }
       });
     });
   }

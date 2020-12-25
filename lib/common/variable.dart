@@ -1,8 +1,8 @@
 abstract class AppColors {
   // 应用主题色
   static const APP_THEME = 0xfff8f8f8; // 主题颜色
-  static const IMPORTANT_COLOR = 0xff5340a7; // 突出颜色
-  static const IMPORTANT_COLOR1 = 0xfffa7298; // 突出颜色
+  static const IMPORTANT_COLOR = 0xfffa7298; // 突出颜色
+  static const IMPORTANT_COLOR1 = 0xff5340a7; // 突出颜色
   static const IMPORTANT_COLOR2 = 0xfff34235; // 突出颜色
   static const IMPORTANT_COLOR3 = 0xfffdc106; // 突出颜色
   static const IMPORTANT_COLOR4 = 0xff8ac249; // 突出颜色
