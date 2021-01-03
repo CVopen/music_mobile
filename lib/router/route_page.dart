@@ -5,6 +5,7 @@ import 'package:music_mobile/page/home/home_page.dart';
 import 'package:music_mobile/page/newPage/new_page.dart';
 import 'package:music_mobile/page/login/login.dart';
 import 'package:music_mobile/page/video/video_page.dart';
+import 'package:music_mobile/page/scroll/video.dart';
 
 Map routes = {
   '/': (context) => SplashScreen(),
@@ -14,4 +15,6 @@ Map routes = {
   '/audio_page': (context, {arguments}) => AudioPage(arguments: arguments),
   '/list_page': (context, {arguments}) => MusicListPage(arguments: arguments),
   '/video_page': (context, {arguments}) => VideoPage(arguments: arguments),
+  '/scroll_video_page': (context, {arguments}) =>
+      ScrollVideo(arguments: arguments),
 };

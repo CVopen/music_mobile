@@ -30,4 +30,19 @@ class ApiVideo {
   getComment(data) {
     return _request.get('/comment/mv', data: data);
   }
+
+  // 相关视频
+  getRelated(data) {
+    return _request.get('/related/allvideo', data: data);
+  }
+
+  // 获取视频播放地址
+  getUrl(data) {
+    return _request.get('/video/url', data: data);
+  }
+
+  // 获取视频详情
+  getDetail(data) {
+    return _request.get('/video/detail', data: data);
+  }
 }

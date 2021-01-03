@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
 
           if (infos != null) {
             _url = '/home_page';
-            // _url = '/video_page';
+            // _url = '/scroll_video_page';
             Provider.of<LoginInfo>(context, listen: false).loginSet = infos;
           }
 
@@ -80,12 +80,10 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
-    final _width = _size.width;
-    final _height = _size.height;
     return _color == null
         ? Container(
-            width: _width,
-            height: _height,
+            width: _size.width,
+            height: _size.height,
             color: Color(AppColors.APP_THEME),
             child: null,
           )

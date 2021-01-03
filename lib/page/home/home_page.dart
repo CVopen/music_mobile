@@ -74,8 +74,8 @@ class _HomePageState extends State<HomePage>
         VideoPage(),
       ];
     });
-    _currentIndex = 2;
-    _controller = PageController(initialPage: 2);
+    _currentIndex = 3;
+    _controller = PageController(initialPage: 3);
     this._createBottom();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage>
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          brightness: Brightness.light,
+          // brightness: Brightness.dark,
           title: TitleWidget(),
           actions: [
             CircleLogo(

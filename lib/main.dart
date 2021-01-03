@@ -20,7 +20,7 @@ void main() {
   if (Platform.isAndroid) {
     SystemUiOverlayStyle style = SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.light,
+      // statusBarBrightness: Brightness.dark,
     );
     SystemChrome.setSystemUIOverlayStyle(style);
   }

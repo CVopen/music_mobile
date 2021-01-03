@@ -17,8 +17,7 @@ class Request {
   Request._init() {
     _dio = Dio(BaseOptions(
       // baseUrl: 'http://192.168.1.8:3000/',
-      baseUrl: 'http://192.168.1.106:3000/',
-      // baseUrl: 'https://www.vulpix.top',
+      baseUrl: 'http://192.168.1.102:3000/',
       connectTimeout: 6000,
       receiveTimeout: 6000,
     ));

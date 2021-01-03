@@ -60,6 +60,22 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
     });
   }
 
+  _toPath() {
+    if (widget.type != null) {
+      Navigator.pushNamed(
+        context,
+        '/video_page',
+        arguments: {'id': widget.data['id'], 'name': widget.data['name']},
+      );
+    } else {
+      Navigator.pushNamed(
+        context,
+        '/scroll_video_page',
+        arguments: {'id': widget.data['data']['vid']},
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,15 +86,7 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
         bottom: 8,
       ),
       child: InkWell(
-        onTap: () {
-          print(widget.data['id']);
-          print(widget.data['name']);
-          Navigator.pushNamed(
-            context,
-            '/video_page',
-            arguments: {'id': widget.data['id'], 'name': widget.data['name']},
-          );
-        },
+        onTap: _toPath,
         child: Column(
           children: [
             Stack(
