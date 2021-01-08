@@ -156,15 +156,15 @@ class _PlayWidgetState extends State<PlayWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Row(
                           children: [
                             ImageRadius(
                                 _videoDetail['creator']['avatarUrl'], 30, 30),
-                            SizedBox(width: 5.0),
+                            const SizedBox(width: 5.0),
                             Text(
-                              _videoDetail['creator']['nickname'],
-                              style: TextStyle(
+                              '${_videoDetail['creator']['nickname']}',
+                              style: const TextStyle(
                                 fontSize: AppSize.FONT_SIZE_B,
                                 color: Color(AppColors.BACKGROUND_COLOR),
                               ),
@@ -173,10 +173,14 @@ class _PlayWidgetState extends State<PlayWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Text(
-                          _videoDetail['description'],
-                          style: TextStyle(
+                          _videoDetail['description'] != null
+                              ? _videoDetail['description']
+                              : '',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
                             fontSize: AppSize.FONT_SIZE_M,
                             color: Color(AppColors.BACKGROUND_COLOR),
                           ),
@@ -184,7 +188,7 @@ class _PlayWidgetState extends State<PlayWidget> {
                       ),
                       Text(
                         '${computePlay(_videoDetail['playTime'])}次播放',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: AppSize.FONT_SIZE_S,
                           color: Color(AppColors.FONT_COLOR),
                         ),
@@ -193,68 +197,67 @@ class _PlayWidgetState extends State<PlayWidget> {
                   ),
                 ),
               )
-            : Text(''),
+            : const Text(''),
         _videoDetail != null
             ? Positioned(
                 right: 10,
                 bottom: 30,
                 child: Container(
-                  width: 30,
                   child: Column(
                     children: [
                       Column(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.thumb_up,
                             color: Colors.white,
                           ),
                           Text(
                             computePlay(_videoDetail['praisedCount']),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: AppSize.FONT_SIZE_S,
                               color: Color(AppColors.FONT_COLOR),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Column(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.chat,
                             color: Colors.white,
                           ),
                           Text(
                             computePlay(_videoDetail['commentCount']),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: AppSize.FONT_SIZE_S,
                               color: Color(AppColors.FONT_COLOR),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Column(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.reply,
                             color: Colors.white,
                           ),
                           Text(
                             computePlay(_videoDetail['shareCount']),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: AppSize.FONT_SIZE_S,
                               color: Color(AppColors.FONT_COLOR),
                             ),
                           )
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
               )
-            : Text('')
+            : const Text('')
       ],
     );
   }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music_mobile/api/home_page.dart';
 import 'package:music_mobile/page/audio/audio_widget.dart';
-import 'package:music_mobile/store/audio_info.dart';
 import 'package:music_mobile/store/login_info.dart';
 import 'package:music_mobile/store/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -74,13 +72,9 @@ class _HomePageState extends State<HomePage>
         VideoPage(),
       ];
     });
-    _currentIndex = 3;
-    _controller = PageController(initialPage: 3);
+    _currentIndex = 1;
+    _controller = PageController(initialPage: 1);
     this._createBottom();
-
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AudioInfo>(context, listen: false).showSet = true;
-    });
   }
 
   _createBottom() {
@@ -140,10 +134,7 @@ class _HomePageState extends State<HomePage>
               ),
             ),
             // 播放条
-            Consumer<AudioInfo>(builder: (_, provider, child) {
-              // return SizedBox(height: provider.show ? provider.sizeHeight : 0);
-              return MusicWidget();
-            }),
+            MusicWidget(),
           ],
         ),
         bottomNavigationBar: Theme(

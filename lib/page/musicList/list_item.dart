@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:music_mobile/common/variable.dart';
+import 'package:music_mobile/store/audio_info.dart';
 import 'package:music_mobile/widget/image_radius.dart';
+import 'package:provider/provider.dart';
 
 class MusicListItem extends StatelessWidget {
   final Map item;
@@ -19,7 +21,7 @@ class MusicListItem extends StatelessWidget {
         highlightColor: Colors.transparent,
         radius: 0.0,
         onTap: () {
-          print('播放');
+          Provider.of<AudioInfo>(context, listen: false).setInfo(item) ;
         },
         child: Row(
           children: [
@@ -54,15 +56,23 @@ class MusicListItem extends StatelessWidget {
                 ),
               ),
             ),
-            InkWell(
-              highlightColor: Colors.transparent,
-              radius: 0.0,
-              child: const Icon(
-                Icons.live_tv,
-                color: Color(AppColors.FONT_COLOR),
-              ),
-              onTap: () {},
-            ),
+            item['mv'] > 0
+                ? InkWell(
+                    highlightColor: Colors.transparent,
+                    radius: 0.0,
+                    child: const Icon(
+                      Icons.live_tv,
+                      color: Color(AppColors.FONT_COLOR),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/video_page',
+                        arguments: {'id': item['mv'], 'name': item['name']},
+                      );
+                    },
+                  )
+                : Text(''),
             const SizedBox(width: AppSize.BOX_SIZE_WIDTH_B),
             InkWell(
               highlightColor: Colors.transparent,

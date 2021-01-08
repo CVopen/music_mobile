@@ -22,6 +22,7 @@ class LikeMusic extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
+          print(likeMusic['id']);
           Navigator.pushNamed(context, '/list_page',
               arguments: {'id': likeMusic['id'], 'title': '喜欢'});
         },
