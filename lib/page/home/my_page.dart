@@ -15,9 +15,7 @@ class MyPage extends StatefulWidget {
   _MyPageState createState() => _MyPageState();
 }
 
-class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+class _MyPageState extends State<MyPage> {
   int _level = 0;
   Map _likeMusic = {};
   List _createList = [];

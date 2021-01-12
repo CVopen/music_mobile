@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioInfo with ChangeNotifier {
   List playList = []; // 播放列表
+  List shuffleList = []; // 随机播放列表
   Map music = {}; // 当前播放音乐数据
   bool isInfo = false; // 首次进入应用是否存在播放数据
   bool isPlay = false; // 是否播放
@@ -23,9 +24,8 @@ class AudioInfo with ChangeNotifier {
     _getPrefesMusic();
     // 播放进度
     audioPlayer.onAudioPositionChanged.listen((Duration p) async {
-      nowTime = p.inMilliseconds;
-      if (nowTime > allTime) {
-        print('我比你大');
+      if (p.inMilliseconds <= allTime) {
+        nowTime = p.inMilliseconds;
       }
       notifyListeners();
     });
@@ -52,8 +52,9 @@ class AudioInfo with ChangeNotifier {
         await audioPlayer.stop();
         await audioPlayer.resume();
       } else if (mode == 2) {
-        int index = _createIndex(playList.length, music['id']);
+        int index = _createIndex();
         music = playList[index];
+        shuffleList.add(playList[index]);
         _setPrefesMusic(playList[index]);
         play(music['id']);
       }
@@ -75,12 +76,19 @@ class AudioInfo with ChangeNotifier {
   }
 
   // item点击播放
-  void setInfo(Map info) {
+  void setInfo(Map info, [int index]) {
     if (music['id'] != info['id']) {
       music = info;
-      playList.add(info);
       _setPrefesMusic(info);
-      _setPrefesList();
+      if (index == null) {
+        playList.add(info);
+        _setPrefesList();
+      }
+
+      if (!shuffleList.contains(info)) {
+        shuffleList.add(info);
+      }
+
       play(info['id']);
     } else {
       allTime == 0 ? play(info['id']) : resume();
@@ -116,14 +124,84 @@ class AudioInfo with ChangeNotifier {
     await audioPlayer.seek(Duration(milliseconds: date));
   }
 
-  //随机生成单个索引
-  int _createIndex(max, id) {
-    if (max == 1) return 0;
-    int index = Random().nextInt(max);
-    if (playList[index]['id'] == id) {
-      index = _createIndex(max, id);
+  // 上下首
+  void playSong(String str) {
+    if (mode == 2) {
+      if (str == 'last') {
+        for (int i = 0; i < shuffleList.length; i++) {
+          if (music['id'] == shuffleList[i]['id']) {
+            int index;
+            if (i != 0) {
+              index = i - 1;
+            } else {
+              index = _createIndex();
+              music = playList[index];
+              _setPrefesMusic(playList[index]);
+            }
+            music = shuffleList[index];
+
+            _setPrefesMusic(music);
+            play(music['id']);
+            break;
+          }
+        }
+      } else {
+        int index = _createIndex();
+        print('${playList[index]['id']}   ${music['id']}');
+        music = playList[index];
+        shuffleList.add(playList[index]);
+
+        _setPrefesMusic(playList[index]);
+        play(music['id']);
+      }
+    } else {
+      for (int i = 0; i < playList.length; i++) {
+        if (music['id'] == playList[i]['id']) {
+          int index;
+          if (str == 'next') {
+            i == playList.length - 1 ? index = 0 : index = i + 1;
+          } else {
+            i == 0 ? index = playList.length - 1 : index = i - 1;
+          }
+          music = playList[index];
+          shuffleList = [playList[index]];
+          _setPrefesMusic(music);
+          play(music['id']);
+          break;
+        }
+      }
     }
+  }
+
+  //随机 下一首索引
+  int _createIndex() {
+    int index = Random().nextInt(playList.length);
+
+    if (shuffleList.length >= playList.length) {
+      if (music['id'] == playList[index]['id']) {
+        _createIndex();
+      }
+    } else {
+      for (int i = 0; i < shuffleList.length; i++) {
+        if (playList[index]['id'] == shuffleList[i]['id']) {
+          _createIndex();
+          break;
+        }
+      }
+    }
+
     return index;
+  }
+
+  void removeList(Map data) {
+    if (data['id'] == music['id']) {
+      playSong('next');
+      playList.remove(data);
+    } else {
+      playList.remove(data);
+      notifyListeners();
+    }
+    _setPrefesList();
   }
 
   void _setPrefesMusic(Map data) async {
@@ -157,6 +235,7 @@ class AudioInfo with ChangeNotifier {
     if (playInfo != null) {
       music = convert.jsonDecode(playInfo);
       isInfo = true;
+      shuffleList = [convert.jsonDecode(playInfo)];
     }
 
     playMode == null ? _setPrefesMode(0) : mode = playMode;

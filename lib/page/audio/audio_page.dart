@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:music_mobile/common/variable.dart';
+import 'package:music_mobile/page/audio/model.dart';
 import 'package:music_mobile/store/audio_info.dart';
+import 'package:music_mobile/store/theme_model.dart';
 import 'package:music_mobile/utils/format.dart';
 import 'package:music_mobile/widget/Header.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +21,7 @@ class _AudioPageState extends State<AudioPage> {
     final _barHeight = MediaQueryData.fromWindow(window).padding.top; // 获取状态栏高度
     final _size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color(0xFF090e42),
+      backgroundColor: Color(0xFF1e1e24),
       body: Consumer<AudioInfo>(
         builder: (context, t, child) {
           return Stack(
@@ -75,7 +78,9 @@ class _AudioPageState extends State<AudioPage> {
                         value: t.nowTime / 1,
                         min: 0,
                         max: t.allTime / 1,
-                        activeColor: Color(0xffec7194),
+                        activeColor: Color(
+                            Provider.of<ThemeModel>(context, listen: false)
+                                .color),
                         onChanged: (double newValue) {
                           setState(() {
                             t.seek(newValue.toInt());
@@ -109,15 +114,22 @@ class _AudioPageState extends State<AudioPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.fast_rewind,
-                      color: Colors.white54,
-                      size: 42.0,
+                    InkWell(
+                      child: const Icon(
+                        Icons.fast_rewind,
+                        color: Colors.white54,
+                        size: 42.0,
+                      ),
+                      onTap: () {
+                        t.playSong('last');
+                      },
                     ),
                     const SizedBox(width: 32.0),
                     Container(
                       decoration: BoxDecoration(
-                          color: Color(0xffec7194),
+                          color: Color(
+                              Provider.of<ThemeModel>(context, listen: false)
+                                  .color),
                           borderRadius: BorderRadius.circular(50.0)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -137,11 +149,16 @@ class _AudioPageState extends State<AudioPage> {
                       ),
                     ),
                     const SizedBox(width: 32.0),
-                    const Icon(
-                      Icons.fast_forward,
-                      color: Colors.white54,
-                      size: 42.0,
-                    )
+                    InkWell(
+                      child: const Icon(
+                        Icons.fast_forward,
+                        color: Colors.white54,
+                        size: 42.0,
+                      ),
+                      onTap: () {
+                        t.playSong('next');
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -193,7 +210,7 @@ class _PlayModelState extends State<PlayModel> {
           child: Icon(
             _isList ? Icons.favorite : Icons.favorite_border,
             size: 28,
-            color: Color(0xffec7194),
+            color: Color(Provider.of<ThemeModel>(context, listen: false).color),
           ),
           onTap: () {
             setState(() {
@@ -206,7 +223,7 @@ class _PlayModelState extends State<PlayModel> {
           radius: 0.0,
           child: Icon(
             _palyIcon[_play],
-            color: Color(0xffec7194),
+            color: Color(Provider.of<ThemeModel>(context, listen: false).color),
             size: 28,
           ),
           onTap: () {
@@ -222,10 +239,16 @@ class _PlayModelState extends State<PlayModel> {
           radius: 0.0,
           child: Icon(
             Icons.queue_music,
-            color: Color(0xffec7194),
+            color: Color(Provider.of<ThemeModel>(context, listen: false).color),
             size: 28,
           ),
-          onTap: () {},
+          onTap: () {
+            showCupertinoModalBottomSheet(
+              context: context,
+              enableDrag: false,
+              builder: (context) => ModelMusic(isStay: true),
+            );
+          },
         ),
       ],
     );
@@ -244,9 +267,11 @@ class Mask extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFF090e42).withOpacity(0.4),
-            Color(0xff1a1d45),
-            Color(0xFFfd5f74).withOpacity(0.6)
+            Color(0xFF090e42).withOpacity(0.2),
+            Color(0xff1a1d45).withOpacity(0.2),
+            // Color(0xFFfd5f74).withOpacity(0.6),
+            Color(Provider.of<ThemeModel>(context, listen: false).color)
+                .withOpacity(0.2)
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
