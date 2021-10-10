@@ -19,7 +19,9 @@ class _TopListCardState extends State<TopListCard> {
   @override
   void initState() {
     super.initState();
+    // new Future.delayed(Duration(seconds: 3), () {
     this._getDetail();
+    // });
   }
 
   Future _getDetail() async {

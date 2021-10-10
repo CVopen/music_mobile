@@ -45,7 +45,7 @@ class ApiHome {
   getTopList() => _request.get('/toplist');
 
   // 排行榜详情 传入排行榜id
-  getTopListDetail(data) => _request.get('/top/list', data: data);
+  getTopListDetail(data) => _request.get('/playlist/detail', data: data);
 
   // 获取等级
   getLevel() => _request.get('/user/level');
